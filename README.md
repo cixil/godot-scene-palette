@@ -1,6 +1,7 @@
 # Scene Palette
 **A plugin for Godot 4: Easily drag and drop nodes into a scene from a palette.**
 
+![gif of basic usage](/gifs/usage_demo.gif)
 
 
 ## Using Scene Palette
@@ -17,3 +18,6 @@ palette allows you to see scene previews and save favorites.
 
 The Scene Palette Plugin is essentially an alternative file browser with tiled
 thumbnails, making it easier to see all your scenes at once.
+
+
+More gifs and updates to come!
