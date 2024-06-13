@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PalettePluginSaveData" load_steps=2 format=3 uid="uid://2173gbi22gpx"]
+
+[ext_resource type="Script" path="res://addons/scene_palette/resources/rsc_pallete_plugin_save_data.gd" id="1_wmgbb"]
+
+[resource]
+script = ExtResource("1_wmgbb")
+favorites = {}

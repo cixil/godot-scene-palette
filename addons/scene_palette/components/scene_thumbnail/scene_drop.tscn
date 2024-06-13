@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://cypob1bi5kovv"]
+
+[ext_resource type="Script" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop_holder.gd" id="1_1tb3w"]
+[ext_resource type="Script" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop.gd" id="2_7tuog"]
+[ext_resource type="Texture2D" uid="uid://cgrtskqrq8iqy" path="res://addons/scene_palette/icons/open_scene.png" id="3_iydoq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_txl6c"]
+font_size = 10
+
+[node name="SceneDropHolder" type="MarginContainer"]
+clip_contents = true
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_1tb3w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="SceneDrop" type="Panel" parent="VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(65, 65)
+layout_mode = 2
+script = ExtResource("2_7tuog")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/SceneDrop"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 15
+
+[node name="PicturePoint" type="Control" parent="VBoxContainer/SceneDrop/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "name"
+label_settings = SubResource("LabelSettings_txl6c")
+autowrap_mode = 1
+
+[node name="OpenSceneButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+tooltip_text = "Open Scene in Editor"
+icon = ExtResource("3_iydoq")
+
+[connection signal="mouse_entered" from="VBoxContainer/SceneDrop" to="VBoxContainer/SceneDrop" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/SceneDrop" to="VBoxContainer/SceneDrop" method="_on_mouse_exited"]
+[connection signal="pressed" from="OpenSceneButton" to="." method="_on_open_scene_button_pressed"]

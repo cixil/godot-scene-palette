@@ -1,0 +1,199 @@
+[gd_scene load_steps=7 format=3 uid="uid://blawi4i3chdo3"]
+
+[ext_resource type="Script" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
+[ext_resource type="PackedScene" uid="uid://bvpntidioecs2" path="res://addons/scene_palette/components/sub_palette.tscn" id="2_tthq0"]
+[ext_resource type="PackedScene" uid="uid://cypob1bi5kovv" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop.tscn" id="3_wqrsw"]
+[ext_resource type="PackedScene" uid="uid://wfk2vnuru8d" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.tscn" id="4_ynrw4"]
+[ext_resource type="Texture2D" uid="uid://bf5ltt1pu5oc0" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
+[ext_resource type="Texture2D" uid="uid://brn8ob85ane7i" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
+
+[node name="Palette" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_wgshj")
+subpalette_scene = ExtResource("2_tthq0")
+scene_drop_scene = ExtResource("3_wqrsw")
+fav_button_scene = ExtResource("4_ynrw4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HFlowContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Current Directory: "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ChooseDirectoryButton" type="Button" parent="VBoxContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Choose A Directory"
+
+[node name="SaveDirToFavorites" type="Button" parent="VBoxContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Add to favorites."
+icon = ExtResource("5_fqbaj")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HFlowContainer2" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HFlowContainer2"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="FavoritesSettings" type="Button" parent="VBoxContainer/HFlowContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+tooltip_text = "Show additional settings options."
+toggle_mode = true
+icon = ExtResource("6_q5myn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HFlowContainer2/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HFlowContainer2/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_fqbaj")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="VBoxContainer/HFlowContainer2/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Favorites"
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HFlowContainer2/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_fqbaj")
+stretch_mode = 2
+
+[node name="FavoritesBar" type="HFlowContainer" parent="VBoxContainer/HFlowContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SettingsContainer" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/HFlowContainer"]
+layout_mode = 2
+text = "Show scene labels: "
+
+[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="UsePreview" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="UsePreviewLabel" type="Label" parent="VBoxContainer/SettingsContainer/UsePreview"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Turned on:
+Instantiates the scene and centers it in the preview window.
+Suitable for small 2D scenes, provides a better thumbnail than
+the editor preview. Ignores scenes that are not 2D or that
+contain a camera.
+CAUTION: This will actually load and instantiate the scene,
+it is great for small assets, but may not be suitable for large
+scenes or a directory that contains a lot of files.
+
+Turned off:
+Uses the editor preview. This is generated from the visible
+window when you last saved scene. If the thumbnail is blank,
+open the scene, center it and save it. This should update
+the thumbnail.
+
+If working on a favorite palette, preference is saved per palette."
+text = "Instantiate Scenes for Previews: "
+autowrap_mode = 3
+
+[node name="UsePreviewCheckButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/UsePreview"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Turned on:
+Instantiates the scene and centers it in the preview window.
+Suitable for small 2D scenes, provides a better thumbnail than
+the editor preview. Ignores scenes that are not 2D or that
+contain a camera.
+CAUTION: This will actually load and instantiate the scene,
+it is great for small assets, but may not be suitable for large
+scenes or a directory that contains a lot of files.
+
+Turned off:
+Uses the editor preview. This is generated from the visible
+window when you last saved scene. If the thumbnail is blank,
+open the scene, center it and save it. This should update
+the thumbnail.
+
+If working on a favorite palette, preference is saved per palette."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Choose a directory to get started."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer"]
+unique_name_in_owner = true
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(478, 500)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HBoxContainer/ChooseDirectoryButton" to="." method="_on_choose_directory_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HBoxContainer/SaveDirToFavorites" to="." method="_on_save_dir_to_favorites_pressed"]
+[connection signal="toggled" from="VBoxContainer/HFlowContainer2/HBoxContainer2/FavoritesSettings" to="." method="_on_favorites_settings_toggled"]
+[connection signal="toggled" from="VBoxContainer/SettingsContainer/HFlowContainer/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/SettingsContainer/UsePreview/UsePreviewCheckButton" to="." method="_on_use_preview_check_button_toggled"]
+[connection signal="dir_selected" from="VBoxContainer/FileDialog" to="." method="_on_file_dialog_dir_selected"]
