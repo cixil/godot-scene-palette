@@ -15,4 +15,5 @@ data_*/
 mono_crash.*.json
 
 # other
-.aseprite
+*.aseprite
+*.import
