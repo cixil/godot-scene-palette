@@ -9,7 +9,7 @@
 Using the file browser on top, navigate to the folder containing scenes for
 your palette. The plugin will create a palette automatically using the scenes
 in this folder. Nested folders are also allowed. To save a favorite directory
-for easy access. Click the heart button next to the file browser.
+for easy access, click the heart button next to the file browser.
 
 #### Using a Palette
 Dragging and dropping scenes from the Scene Palette induces the same behavior
