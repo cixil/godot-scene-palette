@@ -25,4 +25,5 @@ them and saved palettes will persist when closing and reopening the editor.
 ![gif of basic usage](/gifs/select-fav-opt.gif)
 
 
-
+More options:
+![gif of basic usage](/gifs/and-more-opt.gif)
