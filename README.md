@@ -27,6 +27,7 @@ them and saved palettes will persist when closing and reopening the editor.
 ![gif of basic usage](/gifs/select-fav-opt.gif)
 
 
-More options:
+#### More Options
+If you are working on a 2D project, you can instantiate the actual scenes to display in the palette thumbnails to get a crisp image, or you can use the editor's built-in previews (default). These previews come from a snapshot of the scene in the editor window from the last time you saved the scene. If you are using editor previews and no preview shows up, open the scene with the the button on the top right of the thumbnail, center the image and save it again. You may need to re-open the folder in the plugin, but this should update the thumbnails.
 
 ![gif of basic usage](/gifs/and-more-opt.gif)
