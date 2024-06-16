@@ -1,4 +1,4 @@
-# ![icon](/gifs/scene-palette-icon.png) Scene Palette
+#  Scene Palette
 
 **A plugin for Godot 4: Easily drag and drop nodes into a scene from a palette.**
 
