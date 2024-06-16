@@ -31,3 +31,9 @@ them and saved palettes will persist when closing and reopening the editor.
 If you are working on a 2D project, you can instantiate the actual scenes to display in the palette thumbnails to get a crisp image, or you can use the editor's built-in previews (default). These previews come from a snapshot of the scene in the editor window from the last time you saved the scene. If you are using editor previews and no preview shows up, open the scene with the the button on the top right of the thumbnail, center the image and save it again. You may need to re-open the folder in the plugin, but this should update the thumbnails.
 
 ![gif of basic usage](/gifs/and-more-opt.gif)
+
+
+## Issues and Feature Requests
+I'm actively using this plugin and happy to fix bugs and implement small feature requests that improve quality-of-life. Please submit an issue.
+
+I will not currently address any bugs related to 3D games, but I'm happy to accept pull requests.
