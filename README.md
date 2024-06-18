@@ -34,6 +34,10 @@ If you are working on a 2D project, you can instantiate the actual scenes to dis
 
 
 ## Issues and Feature Requests
-I'm actively using this plugin and happy to fix bugs and implement small feature requests that improve quality-of-life. Please submit an issue.
+Feel free to submit an issue or PR for small feature requests.
 
-I will not currently address any bugs related to 3D games, but I'm happy to accept pull requests.
+#### Similar Plugins
+- [https://github.com/KoBeWi/Godot-Instance-Dock](https://github.com/KoBeWi/Godot-Instance-Dock)
+- [https://github.com/MightyPrinny/godot-scene-palette/tree/master](https://github.com/MightyPrinny/godot-scene-palette/tree/master) (Godot 3)
+
+
