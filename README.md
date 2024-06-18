@@ -4,6 +4,7 @@
 
 ![gif of basic usage](/gifs/basic-use-opt.gif)
 
+Download Scene Palette from AssetLib in the Godot editor or from [https://godotengine.org/asset-library/asset/3074](https://godotengine.org/asset-library/asset/3074)
 
 ## Using Scene Palette
 The Scene Palette Plugin is essentially an alternative file browser with tiled
