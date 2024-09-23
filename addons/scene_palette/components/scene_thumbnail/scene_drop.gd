@@ -6,6 +6,7 @@ const MOUSE_HOVER_SCALE_ADJUST = 0.05
 
 @onready var picture_point = %PicturePoint
 @onready var name_label = %NameLabel
+@onready var texture_rect: TextureRect = %TextureRect
 
 var _scene_path:String
 var instantiate_scene_preview:
@@ -31,18 +32,28 @@ func _create_display_label(path:String) -> String:
 func set_scene(path:String):
 	tooltip_text = path
 	_scene_path = path
+	var file_extension = path.split('.')[-1]
 	
 	for node in picture_point.get_children():
 		node.queue_free()
-	if instantiate_scene_preview:
-		var node:Node = load(_scene_path).instantiate()
-		if _scene_is_safe(node):
-			picture_point.add_child(node)
-			return
-		# if scene is not safe to instantiate, just keep a preview
-		
+	
+	match file_extension:
+		'png':
+			texture_rect.texture = load(_scene_path)
+		'tscn':
+			if instantiate_scene_preview:
+					var node:Node = load(_scene_path).instantiate()
+					if _scene_is_safe(node):
+						picture_point.add_child(node)
+						return
+			# if scene is not safe to instantiate, just keep a preview
+			_make_preview()
+		'obj':
+			_make_preview()
+
+func _make_preview():
 	var resource_previewer = EditorInterface.get_resource_previewer()
-	resource_previewer.queue_resource_preview(path, self, '_on_resource_preview', null)
+	resource_previewer.queue_resource_preview(_scene_path, self, '_on_resource_preview', null)
 
 func _on_resource_preview(path:String, preview:Texture2D, thumbnail_preview:Texture2D, _user_data):
 	var texture_rect = TextureRect.new()

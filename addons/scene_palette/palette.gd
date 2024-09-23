@@ -33,11 +33,14 @@ var top_level_sub_palette:PalettePluginSubPalette
 @onready var instantiate_for_preview_button = %UsePreviewCheckButton
 @onready var icon_scene_scale_slider = %IconSceneScaleSlider
 @onready var show_scene_label_button = %ShowSceneLabelButton
+@onready var supported_file_type_label: Label = %SupportedFileTypeLabel
+@onready var allow_file_types_button: CheckButton = %AllowFileTypesButton
 
 # have save data to remember favorite palettes
 const save_data_dir = "res://addons/scene_palette/save_data/"
 const save_data_path = save_data_dir + "save_data.tres"
 const pp = 'ScenePalettePlugin: ' # prepended to any printed messages
+const allowed_file_types = ['tscn', 'png', 'gltf', 'glb', 'fbx', 'obj']
 
 # signals to scene drops to indicate setting changes
 signal scene_scale_changed(amt:float)
@@ -71,6 +74,7 @@ var _current_dir:
 			toggle_on = favorite.instantiate_scenes_for_previews 
 			scene_scale = favorite.get('scene_preview_scale', scene_scale)
 			show_scene_label_button.button_pressed = favorite.get('show_labels', false)
+			allow_file_types_button.button_pressed = favorite.get('allow_nonscene_files', false)
 		else:
 			icon_scene_scale_slider.value = 1
 		
@@ -81,6 +85,8 @@ var _current_dir:
 		await get_tree().create_timer(0.05).timeout # ¯\_(ツ)_/¯ don't work without it
 		icon_scene_scale_slider.value = scene_scale
 
+func _reload_palette():
+	_current_dir = _current_dir
 
 ## Recursively create subpalettes for the specified directory
 func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
@@ -97,10 +103,11 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 				new_sub_palette.set_title(file_name)
 				_populate_scenes(new_sub_palette, path)
 			else:
-				if file_name.split('.')[-1] == 'tscn':
+				var file_extension:String = file_name.split('.')[-1]
+				var all_file_types_allowed:bool = allow_file_types_button.button_pressed
+				if file_extension == 'tscn' or (all_file_types_allowed and file_extension in allowed_file_types):
 					var scene_drop:PalettePluginSceneDrop = scene_drop_scene.instantiate()
 					sub_palette.add_item(scene_drop)
-					
 					scene_drop.instantiate_scene_preview = instantiate_for_preview_button.button_pressed
 					scene_scale_changed.connect(scene_drop.adjust_scale)
 					show_scene_label_toggled.connect(scene_drop.show_file_label)
@@ -117,6 +124,13 @@ func _ready():
 	_populate_favorites_tab_bar()
 	if not FileAccess.file_exists(save_data_path):
 		_create_new_save_data()
+	
+	var types_string:String = 'Supported file types: '
+	for type in allowed_file_types:
+		types_string += type + ', '
+	types_string = types_string.left(types_string.length() - 2) # remove last comma
+	
+	supported_file_type_label.text = types_string
 
 func _create_new_save_data():
 	var data = PalettePluginSaveData.new()
@@ -235,3 +249,10 @@ func _on_icon_scene_scale_slider_value_changed(value:float):
 
 func _on_reset_scale_button_pressed():
 	icon_scene_scale_slider.value = 1
+
+func _on_allow_file_types_button_toggled(toggled_on: bool) -> void:
+	var save_data:PalettePluginSaveData = _get_save_data()
+	if _current_dir in save_data.favorites:
+		save_data.favorites[_current_dir].allow_nonscene_files = toggled_on
+		_save_data(save_data)
+	_reload_palette()

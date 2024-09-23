@@ -51,6 +51,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/SceneDrop/MarginContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+expand_mode = 5
+
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2

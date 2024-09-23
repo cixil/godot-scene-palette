@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://blawi4i3chdo3"]
+[gd_scene load_steps=8 format=3 uid="uid://blawi4i3chdo3"]
 
 [ext_resource type="Script" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
 [ext_resource type="PackedScene" uid="uid://bvpntidioecs2" path="res://addons/scene_palette/components/sub_palette.tscn" id="2_tthq0"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://wfk2vnuru8d" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.tscn" id="4_ynrw4"]
 [ext_resource type="Texture2D" uid="uid://bf5ltt1pu5oc0" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
 [ext_resource type="Texture2D" uid="uid://brn8ob85ane7i" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf8ba"]
 
 [node name="Palette" type="Control"]
 clip_contents = true
@@ -101,7 +103,6 @@ layout_mode = 2
 
 [node name="SettingsContainer" type="VBoxContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="SettingsHeader" type="HBoxContainer" parent="VBoxContainer/SettingsContainer"]
@@ -120,7 +121,7 @@ stretch_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/SettingsHeader"]
 layout_mode = 2
-text = "Settings"
+text = "Palette Settings"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/SettingsContainer/SettingsHeader"]
 layout_mode = 2
@@ -129,25 +130,39 @@ size_flags_vertical = 4
 texture = ExtResource("6_q5myn")
 stretch_mode = 2
 
-[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+[node name="UseOtherFileTypes" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
 layout_mode = 2
+tooltip_text = "If enabled, show all supported file types (png, glb, etc), not just \".tscn\" files."
 
-[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/HFlowContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/UseOtherFileTypes"]
+layout_mode = 2
+text = "Allow non-scene file types:"
+
+[node name="AllowFileTypesButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/UseOtherFileTypes"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="ShowLabels" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+layout_mode = 2
+tooltip_text = "Show scene labels:
+
+Show filenames under thumbnails."
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/ShowLabels"]
 layout_mode = 2
 text = "Show scene labels: "
 
-[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/HFlowContainer"]
+[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/ShowLabels"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 10
 
 [node name="UsePreview" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
 layout_mode = 2
+tooltip_text = "Instantiate Scene for Previews:
 
-[node name="UsePreviewLabel" type="Label" parent="VBoxContainer/SettingsContainer/UsePreview"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Turned on:
+Turned on:
 Instantiates the scene and centers it in the preview window.
 Suitable for small 2D scenes, provides a better thumbnail than
 the editor preview. Ignores scenes that are not 2D or that
@@ -163,31 +178,23 @@ open the scene, center it and save it. This should update
 the thumbnail.
 
 If working on a favorite palette, preference is saved per palette."
+
+[node name="UsePreviewLabel" type="Label" parent="VBoxContainer/SettingsContainer/UsePreview"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Instantiate Scenes for Previews: "
 autowrap_mode = 3
 
 [node name="UsePreviewCheckButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/UsePreview"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Turned on:
-Instantiates the scene and centers it in the preview window.
-Suitable for small 2D scenes, provides a better thumbnail than
-the editor preview. Ignores scenes that are not 2D or that
-contain a camera.
-CAUTION: This will actually load and instantiate the scene,
-it is great for small assets, but may not be suitable for large
-scenes or a directory that contains a lot of files.
-
-Turned off:
-Uses the editor preview. This is generated from the visible
-window when you last saved scene. If the thumbnail is blank,
-open the scene, center it and save it. This should update
-the thumbnail.
-
-If working on a favorite palette, preference is saved per palette."
 
 [node name="HFlowContainer2" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
 layout_mode = 2
+tooltip_text = "Scene Preview Scale:
+
+Adjust size of scene previews. Only works if \"Instantiate scene for previews is turned on\"."
 
 [node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/HFlowContainer2"]
 layout_mode = 2
@@ -207,6 +214,23 @@ tick_count = 6
 layout_mode = 2
 tooltip_text = "reset scale to 1"
 text = "reset"
+
+[node name="EmptyHSeparator" type="HSeparator" parent="VBoxContainer/SettingsContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yf8ba")
+
+[node name="SupportedFileTypeLabel" type="Label" parent="VBoxContainer/SettingsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Supported file types: tscn, png, gltf, glb, fbx, obj"
+autowrap_mode = 3
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Open repository on Github."
+text = "A plugin by cixil"
+uri = "https://github.com/cixil/godot-scene-palette"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
@@ -236,7 +260,8 @@ file_mode = 2
 [connection signal="pressed" from="VBoxContainer/DirectoryPicker/HBoxContainer/ChooseDirectoryButton" to="." method="_on_choose_directory_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/DirectoryPicker/HBoxContainer/SaveDirToFavorites" to="." method="_on_save_dir_to_favorites_pressed"]
 [connection signal="toggled" from="VBoxContainer/FavoritesBar/Favebar header/FavoritesSettings" to="." method="_on_favorites_settings_toggled"]
-[connection signal="toggled" from="VBoxContainer/SettingsContainer/HFlowContainer/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/SettingsContainer/UseOtherFileTypes/AllowFileTypesButton" to="." method="_on_allow_file_types_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/SettingsContainer/ShowLabels/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
 [connection signal="toggled" from="VBoxContainer/SettingsContainer/UsePreview/UsePreviewCheckButton" to="." method="_on_use_preview_check_button_toggled"]
 [connection signal="value_changed" from="VBoxContainer/SettingsContainer/HFlowContainer2/IconSceneScaleSlider" to="." method="_on_icon_scene_scale_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/SettingsContainer/HFlowContainer2/ResetScaleButton" to="." method="_on_reset_scale_button_pressed"]
