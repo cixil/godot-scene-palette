@@ -92,28 +92,24 @@ func _reload_palette():
 func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 	var dir = DirAccess.open(dir_path)
 	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				var new_sub_palette:PalettePluginSubPalette = subpalette_scene.instantiate()
-				var path = dir_path + '/' + file_name
-				sub_palette.add_subpalette(new_sub_palette)
-				new_sub_palette.directory = path
-				new_sub_palette.set_title(file_name)
-				_populate_scenes(new_sub_palette, path)
-			else:
-				var file_extension:String = file_name.split('.')[-1]
-				var all_file_types_allowed:bool = allow_file_types_button.button_pressed
-				if file_extension == 'tscn' or (all_file_types_allowed and file_extension in allowed_file_types):
-					var scene_drop:PalettePluginSceneDrop = scene_drop_scene.instantiate()
-					sub_palette.add_item(scene_drop)
-					scene_drop.instantiate_scene_preview = instantiate_for_preview_button.button_pressed
-					scene_scale_changed.connect(scene_drop.adjust_scale)
-					show_scene_label_toggled.connect(scene_drop.show_file_label)
-					scene_drop.set_scene(dir_path +'/' + file_name)
-					
-			file_name = dir.get_next()
+		for dir_name in dir.get_directories():
+			var new_sub_palette:PalettePluginSubPalette = subpalette_scene.instantiate()
+			var path = dir_path + '/' + dir_name
+			sub_palette.add_subpalette(new_sub_palette)
+			new_sub_palette.directory = path
+			new_sub_palette.set_title(dir_name)
+			_populate_scenes(new_sub_palette, path)
+		for file_name in dir.get_files():
+			var file_extension:String = file_name.split('.')[-1]
+			var all_file_types_allowed:bool = allow_file_types_button.button_pressed
+			if file_extension == 'tscn' or (all_file_types_allowed and file_extension in allowed_file_types):
+				var scene_drop:PalettePluginSceneDrop = scene_drop_scene.instantiate()
+				sub_palette.add_item(scene_drop)
+				scene_drop.instantiate_scene_preview = instantiate_for_preview_button.button_pressed
+				scene_scale_changed.connect(scene_drop.adjust_scale)
+				show_scene_label_toggled.connect(scene_drop.show_file_label)
+				scene_drop.set_scene(dir_path +'/' + file_name)
+
 	else:
 		print(pp, 'No directory found for ', dir_path)
 
