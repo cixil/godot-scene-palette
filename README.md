@@ -36,7 +36,10 @@ If you are working on a 2D project, you can instantiate the actual scenes to dis
 ## Issues and Feature Requests
 Feel free to submit an issue or PR for small feature requests.
 
-#### Similar Plugins
+## Like this Plugin?
+You may like my other plugin, [Snap Rotate](https://github.com/cixil/snap-rotate-godot-plugin/tree/main)
+
+#### Similar Plugins not by me:
 - [https://github.com/KoBeWi/Godot-Instance-Dock](https://github.com/KoBeWi/Godot-Instance-Dock)
 - [https://github.com/MightyPrinny/godot-scene-palette/tree/master](https://github.com/MightyPrinny/godot-scene-palette/tree/master) (Godot 3)
 
