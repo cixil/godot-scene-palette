@@ -105,8 +105,8 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 			var path = dir_path + '/' + dir_name
 			sub_palette.add_subpalette(new_sub_palette)
 			new_sub_palette.directory = path
-			new_sub_palette.minimized = minimized_dirs.has(dir_name)
-			new_sub_palette.minimize_changed.connect(_on_sub_palette_minimize_changed.bind(dir_name))
+			new_sub_palette.minimized = minimized_dirs.has(path)
+			new_sub_palette.minimize_changed.connect(_on_sub_palette_minimize_changed.bind(path))
 			new_sub_palette.set_title(dir_name)
 			_populate_scenes(new_sub_palette, path)
 		for file_name in dir.get_files():
