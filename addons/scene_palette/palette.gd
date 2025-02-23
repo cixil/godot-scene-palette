@@ -1,7 +1,6 @@
 @tool
 extends Control
 
-# TODO: Remember which folders are minimized/expanded for favorites
 # TODO: when settings are expanded, and plugin dock width is short, wrapping is weird. fix
 # TODO: Add expand all/minimize all buttons
 # TODO: Add default texture/tooltip for preview not found
@@ -90,6 +89,15 @@ func _reload_palette():
 
 ## Recursively create subpalettes for the specified directory
 func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
+	var save_data:PalettePluginSaveData = _get_save_data()
+	var minimized_dirs: Dictionary
+
+	if _current_dir_in_favorites():
+		var favorite = save_data.favorites[_current_dir]
+		minimized_dirs = favorite.get("minimized_dirs", {})
+	else:
+		minimized_dirs = {}
+
 	var dir = DirAccess.open(dir_path)
 	if dir:
 		for dir_name in dir.get_directories():
@@ -97,6 +105,8 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 			var path = dir_path + '/' + dir_name
 			sub_palette.add_subpalette(new_sub_palette)
 			new_sub_palette.directory = path
+			new_sub_palette.minimized = minimized_dirs.has(dir_name)
+			new_sub_palette.minimize_changed.connect(_on_sub_palette_minimize_changed.bind(dir_name))
 			new_sub_palette.set_title(dir_name)
 			_populate_scenes(new_sub_palette, path)
 		for file_name in dir.get_files():
@@ -252,3 +262,14 @@ func _on_allow_file_types_button_toggled(toggled_on: bool) -> void:
 		save_data.favorites[_current_dir].allow_nonscene_files = toggled_on
 		_save_data(save_data)
 	_reload_palette()
+
+func _on_sub_palette_minimize_changed(toggled_on: bool, path: String) -> void:
+	var save_data:PalettePluginSaveData = _get_save_data()
+	if _current_dir in save_data.favorites:
+		var minimized_dirs = save_data.favorites[_current_dir].get_or_add("minimized_dirs", {})
+		# using dict as hash set
+		if toggled_on:
+			minimized_dirs[path] = null
+		else:
+			minimized_dirs.erase(path)
+		_save_data(save_data)
