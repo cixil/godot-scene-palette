@@ -68,6 +68,7 @@ var _current_dir:
 		# if we are navigating to a favorite, load saved settings for it
 		if _current_dir_in_favorites():
 			var save_data:PalettePluginSaveData = _get_save_data()
+			_clean_save_data() # clear any stale references to minimized directories
 			var favorite = save_data.favorites[_current_dir]
 			top_level_sub_palette.set_color(favorite.color)
 			toggle_on = favorite.instantiate_scenes_for_previews 
@@ -149,6 +150,17 @@ func _get_save_data() -> PalettePluginSaveData:
 		_create_new_save_data()
 		_populate_favorites_tab_bar()
 	return ResourceLoader.load(save_data_path)
+
+func _clean_save_data():
+	# Removes stale directory references
+	var save_data:PalettePluginSaveData = _get_save_data()
+	if _current_dir_in_favorites():
+		var favorite:Dictionary = save_data.favorites[_current_dir]
+		var minimized_dirs = favorite.get_or_add("minimized_dirs", {})
+		for path in minimized_dirs.keys():
+			if not DirAccess.dir_exists_absolute(path):
+				save_data.favorites[_current_dir]["minimized_dirs"].erase(path)
+		_save_data(save_data)
 
 func _save_data(data:PalettePluginSaveData):
 	ResourceSaver.save(data, save_data_path)
