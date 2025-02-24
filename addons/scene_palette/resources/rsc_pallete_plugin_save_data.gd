@@ -12,5 +12,6 @@ func add_favorite(directory, instantiate_scenes, color=DEFAULT_BUTTON_COLOR):
 		instantiate_scenes_for_previews = instantiate_scenes,
 		color = color,
 		scene_preview_scale = 1,
-		show_labels = true
+		show_labels = true,
+		minimized_dirs = {}
 	}

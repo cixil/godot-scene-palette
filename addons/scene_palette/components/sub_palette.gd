@@ -2,6 +2,8 @@
 extends Control
 class_name PalettePluginSubPalette
 
+signal minimize_changed(value: bool)
+
 @export var arrow_closed:Texture2D
 @export var arrow_open:Texture2D
 
@@ -22,6 +24,20 @@ var expandable:bool = true:
 		if not expandable:
 			title_minimize_button.icon = null
 			title_minimize_button.disabled = true
+
+var minimized:bool = false:
+	set(value):
+		minimized = value
+		
+		if minimized:
+			title_minimize_button.icon = arrow_closed
+			content_container.hide()
+		else:
+			title_minimize_button.icon = arrow_open
+			content_container.show()
+
+		title_minimize_button.set_pressed_no_signal(minimized)
+		minimize_changed.emit(minimized)
 
 func set_title(title:String):
 	title_minimize_button.text = title.replace('-', ' ').replace('_', ' ')
@@ -65,12 +81,7 @@ func add_subpalette(palette:PalettePluginSubPalette):
 
 func _on_title_minimize_button_toggled(toggled_on):
 	if expandable:
-		if toggled_on:
-			title_minimize_button.icon = arrow_closed
-			content_container.hide()
-		else:
-			title_minimize_button.icon = arrow_open
-			content_container.show()
+		self.minimized = toggled_on		
 
 func _on_showin_file_system_button_pressed():
 	EditorInterface.get_file_system_dock().navigate_to_path(directory)
