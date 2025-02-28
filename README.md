@@ -21,7 +21,7 @@ your palette. The plugin will create a palette automatically using the scenes
 in this folder. Nested folders will also be shown as expandable "sub-palettes". 
 
 Press the heart button next to the file selector to save this directory to your
-favorites. You can change the colors of your favorite palettes to diferrentiate
+favorites. You can change the colors of your favorite palettes to differentiate
 them and saved palettes will persist when closing and reopening the editor.
 
 ![gif of basic usage](/gifs/select-fav-opt.gif)
