@@ -40,7 +40,8 @@ Feel free to submit an issue or PR for small feature requests.
 You may like my other plugin, [Snap Rotate](https://github.com/cixil/snap-rotate-godot-plugin/tree/main)
 
 #### Similar Plugins not by me:
-- [https://github.com/KoBeWi/Godot-Instance-Dock](https://github.com/KoBeWi/Godot-Instance-Dock)
+- [Kobewi's Godot Instance dock](https://github.com/KoBeWi/Godot-Instance-Dock)
+  is very similar and has a couple more advanced features, but you create docks by adding scenes to them manually, where as this plugin uses an existing directory structure and has subfolders. Worth checking out to see which better fits your needs.
 - [https://github.com/MightyPrinny/godot-scene-palette/tree/master](https://github.com/MightyPrinny/godot-scene-palette/tree/master) (Godot 3)
 
 
