@@ -23,7 +23,7 @@ func set_scene(path:String):
 	name_label.tooltip_text = scene_name
 	
 	var file_extension = path.split('.')[-1]
-	if file_extension != 'tscn':
+	if file_extension != 'tscn' and file_extension != 'scn':
 		open_scene_button.hide()
 
 func _on_open_scene_button_pressed():

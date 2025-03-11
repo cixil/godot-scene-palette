@@ -222,7 +222,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_yf8ba")
 [node name="SupportedFileTypeLabel" type="Label" parent="VBoxContainer/SettingsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Supported file types: tscn, png, gltf, glb, fbx, obj"
+text = "Supported file types: scn, tscn, png, gltf, glb, fbx, obj"
 autowrap_mode = 3
 
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/SettingsContainer"]
