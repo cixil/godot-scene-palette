@@ -26,8 +26,20 @@ func show_file_label(show:bool):
 
 func _create_display_label(path:String) -> String:
 	var display_label = path.split('.tscn')[0].split('/')[-1]
+	if display_label == null:
+		display_label = path.split('.scn')[0].split('/')[-1]
 	display_label = display_label.replace('_', ' ').replace('-', ' ')
 	return display_label
+
+func _make_preview_for_scene() -> void:
+	if instantiate_scene_preview:
+			var node:Node = load(_scene_path).instantiate()
+			if _scene_is_safe(node):
+				picture_point.add_child(node)
+				return
+	# if scene is not safe to instantiate, just keep a preview
+	_make_preview()
+
 
 func set_scene(path:String):
 	tooltip_text = path
@@ -41,13 +53,9 @@ func set_scene(path:String):
 		'png':
 			texture_rect.texture = load(_scene_path)
 		'tscn':
-			if instantiate_scene_preview:
-					var node:Node = load(_scene_path).instantiate()
-					if _scene_is_safe(node):
-						picture_point.add_child(node)
-						return
-			# if scene is not safe to instantiate, just keep a preview
-			_make_preview()
+			_make_preview_for_scene()
+		'scn':
+			_make_preview_for_scene()
 		'obj':
 			_make_preview()
 
