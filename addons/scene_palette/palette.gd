@@ -45,8 +45,17 @@ const allowed_file_types = ['tscn', 'png', 'gltf', 'glb', 'fbx', 'obj']
 signal scene_scale_changed(amt:float)
 signal show_scene_label_toggled(toggled_on:bool)
 
+var _loading_main_palette:bool = false
+
 var _current_dir:
 	set(value):
+		# setting button_pressed values below can trigget this function
+		# to be called twice in a row, this variable is a quick fix to not allow
+		# duplicate calls which in some cases can duplicate scene drop and subpalette instances.
+		if _loading_main_palette:
+			return
+		_loading_main_palette = true
+
 		_current_dir = value
 		
 		# remove top level palette
@@ -84,6 +93,7 @@ var _current_dir:
 		
 		await get_tree().create_timer(0.05).timeout # ¯\_(ツ)_/¯ don't work without it
 		icon_scene_scale_slider.value = scene_scale
+		_loading_main_palette = false
 
 func _reload_palette():
 	_current_dir = _current_dir
