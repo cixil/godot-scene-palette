@@ -41,7 +41,7 @@ var top_level_sub_palette:PalettePluginSubPalette
 const save_data_dir = "res://addons/scene_palette/save_data/"
 const save_data_path = save_data_dir + "save_data.tres"
 const pp = 'ScenePalettePlugin: ' # prepended to any printed messages
-const allowed_file_types = ['tscn', 'png', 'gltf', 'glb', 'fbx', 'obj']
+const allowed_file_types = ['scn', 'tscn', 'png', 'gltf', 'glb', 'fbx', 'obj']
 
 # signals to scene drops to indicate setting changes
 signal scene_scale_changed(amt:float)
@@ -127,7 +127,7 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 		for file_name in dir.get_files():
 			var file_extension:String = file_name.split('.')[-1]
 			var all_file_types_allowed:bool = allow_file_types_button.button_pressed
-			if file_extension == 'tscn' or (all_file_types_allowed and file_extension in allowed_file_types):
+			if file_extension == 'tscn' or file_extension == 'scn' or (all_file_types_allowed and file_extension in allowed_file_types):
 				var scene_drop:PalettePluginSceneDrop = scene_drop_scene.instantiate()
 				sub_palette.add_item(scene_drop)
 				scene_drop.instantiate_scene_preview = instantiate_for_preview_button.button_pressed
