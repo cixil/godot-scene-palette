@@ -48,6 +48,7 @@ func _on_color_picker_button_color_changed(color):
 func set_color(color:Color):
 	var stylebox:StyleBoxFlat = StyleBoxFlat.new()
 	stylebox.bg_color = color
+	stylebox.set_corner_radius_all(4)
 	stylebox.set_content_margin_all(7)
 	button.add_theme_stylebox_override('normal', stylebox)
 	button.add_theme_stylebox_override('hover', stylebox)
