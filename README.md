@@ -2,7 +2,7 @@
 
 **A plugin for Godot 4: Easily drag and drop nodes into a scene from a palette.**
 
-![gif of basic usage](/gifs/basic-use-opt.gif)
+![gif of basic usage](/gifs/basic-use.gif)
 
 Download Scene Palette from AssetLib in the Godot editor or from [https://godotengine.org/asset-library/asset/3074](https://godotengine.org/asset-library/asset/3074)
 
@@ -23,8 +23,6 @@ in this folder. Nested folders will also be shown as expandable "sub-palettes".
 Press the heart button next to the file selector to save this directory to your
 favorites. You can change the colors of your favorite palettes to differentiate
 them and saved palettes will persist when closing and reopening the editor.
-
-![gif of basic usage](/gifs/select-fav-opt.gif)
 
 
 #### More Options
