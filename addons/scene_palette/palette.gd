@@ -23,7 +23,7 @@ var top_level_sub_palette:PalettePluginSubPalette
 @onready var favorites_bar = %FavoritesBar
 @onready var favorites_settings = %FavoritesSettings
 @onready var scroll_container = %ScrollContainer
-@onready var settings_container = %SettingsContainer
+@onready var scene_scale_setting: HFlowContainer = %SceneScaleSetting
 
 # buttons, etc
 @onready var file_dialog = %FileDialog
@@ -34,6 +34,8 @@ var top_level_sub_palette:PalettePluginSubPalette
 @onready var show_scene_label_button = %ShowSceneLabelButton
 @onready var supported_file_type_label: Label = %SupportedFileTypeLabel
 @onready var allow_file_types_button: CheckButton = %AllowFileTypesButton
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 
 # have save data to remember favorite palettes
 const save_data_dir = "res://addons/scene_palette/save_data/"
@@ -81,11 +83,13 @@ var _current_dir:
 			var favorite = save_data.favorites[_current_dir]
 			top_level_sub_palette.set_color(favorite.color)
 			toggle_on = favorite.instantiate_scenes_for_previews 
+			scene_scale_setting.visible = toggle_on
 			scene_scale = favorite.get('scene_preview_scale', scene_scale)
 			show_scene_label_button.button_pressed = favorite.get('show_labels', false)
 			allow_file_types_button.button_pressed = favorite.get('allow_nonscene_files', false)
 		else:
 			icon_scene_scale_slider.value = 1
+			scene_scale_setting.visible = false
 		
 		instantiate_for_preview_button.button_pressed = toggle_on
 		_populate_scenes(top_level_sub_palette, _current_dir)
@@ -130,14 +134,14 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 				scene_scale_changed.connect(scene_drop.adjust_scale)
 				show_scene_label_toggled.connect(scene_drop.show_file_label)
 				scene_drop.set_scene(dir_path +'/' + file_name)
-
 	else:
 		print(pp, 'No directory found for ', dir_path)
 
 
 func _ready():
 	save_dir_to_favorites.hide()
-	settings_container.hide()
+	scene_scale_setting.hide()
+
 	_populate_favorites_tab_bar()
 	if not FileAccess.file_exists(save_data_path):
 		_create_new_save_data()
@@ -181,8 +185,6 @@ func _on_choose_directory_button_pressed():
 func _on_file_dialog_dir_selected(dir):
 	_current_dir = dir
 	choose_directory_button.text = dir #.split('/')[-1]
-	# set the tooltip in case some of the text is clipped
-	choose_directory_button.tooltip_text = dir
 	if not _current_dir_in_favorites():
 		save_dir_to_favorites.show()
 	else:
@@ -194,6 +196,9 @@ func _on_use_preview_check_button_toggled(toggled_on):
 		var save_data = _get_save_data()
 		save_data.favorites[_current_dir].instantiate_scenes_for_previews = toggled_on
 		_save_data(save_data)
+
+	scene_scale_setting.visible = toggled_on
+
 
 ## Load favorites buttons
 func _populate_favorites_tab_bar():
@@ -259,7 +264,10 @@ func _on_favorites_settings_toggled(toggled_on):
 	for btn in favorites_bar.get_children():
 		if btn is PalettePluginFavoriteButton:
 			btn.set_settings_visibility(toggled_on)
-	settings_container.visible = toggled_on
+	if toggled_on:
+		animation_player.play('open_settings')
+	else:
+		animation_player.play_backwards('open_settings')
 
 func _on_show_scene_label_button_toggled(toggled_on):
 	show_scene_label_toggled.emit(toggled_on)

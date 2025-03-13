@@ -1,13 +1,112 @@
-[gd_scene load_steps=8 format=3 uid="uid://blawi4i3chdo3"]
+[gd_scene load_steps=13 format=3 uid="uid://blawi4i3chdo3"]
 
-[ext_resource type="Script" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
+[ext_resource type="Script" uid="uid://ce51gcynqjgnc" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
 [ext_resource type="PackedScene" uid="uid://bvpntidioecs2" path="res://addons/scene_palette/components/sub_palette.tscn" id="2_tthq0"]
 [ext_resource type="PackedScene" uid="uid://cypob1bi5kovv" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop.tscn" id="3_wqrsw"]
 [ext_resource type="PackedScene" uid="uid://wfk2vnuru8d" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.tscn" id="4_ynrw4"]
-[ext_resource type="Texture2D" uid="uid://bf5ltt1pu5oc0" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
-[ext_resource type="Texture2D" uid="uid://brn8ob85ane7i" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
+[ext_resource type="Texture2D" uid="uid://ccpewkc7gy4nd" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
+[ext_resource type="Texture2D" uid="uid://w7oh6g61e5b7" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
+[ext_resource type="StyleBox" uid="uid://y3ney3lturj3" path="res://addons/scene_palette/styles/back_panel.tres" id="7_ilgrm"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf8ba"]
+[sub_resource type="LabelSettings" id="LabelSettings_xt2pj"]
+font_size = 14
+font_color = Color(0.494342, 0.484388, 0.470806, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilgrm"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+border_width_left = 2
+border_width_top = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Animation" id="Animation_ilgrm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/ChooseDirSeparator:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_xt2pj"]
+resource_name = "open_settings"
+length = 0.05
+step = 0.005
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.005, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 230)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.005),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/ChooseDirSeparator:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.005),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kwcgi"]
+_data = {
+&"RESET": SubResource("Animation_ilgrm"),
+&"open_settings": SubResource("Animation_xt2pj")
+}
 
 [node name="Palette" type="Control"]
 clip_contents = true
@@ -32,133 +131,146 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 7
 
-[node name="DirectoryPicker" type="HFlowContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DirectoryPicker" type="HFlowContainer" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/DirectoryPicker"]
+[node name="FavoritesSettings" type="Button" parent="VBoxContainer/VBoxContainer/DirectoryPicker"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+tooltip_text = "Show additional settings options."
+focus_mode = 0
+toggle_mode = true
+text = "Settings"
+icon = ExtResource("6_q5myn")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/DirectoryPicker"]
+visible = false
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 text = "Current Directory: "
+autowrap_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/DirectoryPicker"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/DirectoryPicker"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 100.0
 
-[node name="ChooseDirectoryButton" type="Button" parent="VBoxContainer/DirectoryPicker/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 100.0
+
+[node name="ChooseDirectoryButton" type="Button" parent="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Click to choose a new palette directory."
 text = "Choose A Directory"
 text_overrun_behavior = 1
 
-[node name="SaveDirToFavorites" type="Button" parent="VBoxContainer/DirectoryPicker/HBoxContainer"]
+[node name="SaveDirToFavorites" type="Button" parent="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 tooltip_text = "Add to favorites."
 icon = ExtResource("5_fqbaj")
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="ChooseDirSeparator" type="HSeparator" parent="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="FavoritesBar" type="HFlowContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-clip_contents = true
+[node name="SettingContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/VBoxContainer/SettingContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("7_ilgrm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer"]
+layout_mode = 2
+
+[node name="SettingsOpener" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="SettingsContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
 
-[node name="Favebar header" type="HBoxContainer" parent="VBoxContainer/FavoritesBar"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-alignment = 1
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
 
-[node name="FavoritesSettings" type="Button" parent="VBoxContainer/FavoritesBar/Favebar header"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 0
-tooltip_text = "Show additional settings options."
-toggle_mode = true
-icon = ExtResource("6_q5myn")
-
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/FavoritesBar/Favebar header"]
+[node name="SettingOptions" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HeartIcon" type="TextureRect" parent="VBoxContainer/FavoritesBar/Favebar header"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("5_fqbaj")
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="VBoxContainer/FavoritesBar/Favebar header"]
-layout_mode = 2
-size_flags_horizontal = 2
-text = "Favorites: "
-
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="SettingsContainer" type="VBoxContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="SettingsHeader" type="HBoxContainer" parent="VBoxContainer/SettingsContainer"]
+[node name="SettingsHeader" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Palette Display Settings.
 
 If currently viewing a favorite palette, settings will be saved for this palette."
 
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/SettingsContainer/SettingsHeader"]
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("6_q5myn")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/SettingsHeader"]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 text = "Palette Settings"
+autowrap_mode = 3
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/SettingsContainer/SettingsHeader"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("6_q5myn")
 stretch_mode = 2
 
-[node name="UseOtherFileTypes" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
-tooltip_text = "If enabled, show all supported file types (png, glb, etc), not just \".tscn\" files."
+text = "Settings are saved per palette. Select a favorite palette to save changed settings."
+label_settings = SubResource("LabelSettings_xt2pj")
+autowrap_mode = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/UseOtherFileTypes"]
-layout_mode = 2
-text = "Allow non-scene file types:"
-
-[node name="AllowFileTypesButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/UseOtherFileTypes"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="ShowLabels" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+[node name="ShowLabels" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions"]
 layout_mode = 2
 tooltip_text = "Show scene labels:
 
 Show filenames under thumbnails."
 
-[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/ShowLabels"]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/ShowLabels"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
-text = "Show scene labels: "
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 80.0
+text = "Show labels: "
+autowrap_mode = 3
 
-[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/ShowLabels"]
+[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/ShowLabels"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="UsePreview" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+[node name="UsePreview" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions"]
 layout_mode = 2
 tooltip_text = "Instantiate Scene for Previews:
 
@@ -179,28 +291,34 @@ the thumbnail.
 
 If working on a favorite palette, preference is saved per palette."
 
-[node name="UsePreviewLabel" type="Label" parent="VBoxContainer/SettingsContainer/UsePreview"]
-custom_minimum_size = Vector2(40, 0)
+[node name="UsePreviewLabel" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/UsePreview"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 80.0
 text = "Instantiate Scenes for Previews: "
 autowrap_mode = 3
 
-[node name="UsePreviewCheckButton" type="CheckButton" parent="VBoxContainer/SettingsContainer/UsePreview"]
+[node name="UsePreviewCheckButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/UsePreview"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="VBoxContainer/SettingsContainer"]
+[node name="SceneScaleSetting" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tooltip_text = "Scene Preview Scale:
 
 Adjust size of scene previews. Only works if \"Instantiate scene for previews is turned on\"."
 
-[node name="Label" type="Label" parent="VBoxContainer/SettingsContainer/HFlowContainer2"]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Scene Preview Scale"
+autowrap_mode = 3
 
-[node name="IconSceneScaleSlider" type="HSlider" parent="VBoxContainer/SettingsContainer/HFlowContainer2"]
+[node name="IconSceneScaleSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -210,30 +328,131 @@ step = 0.01
 value = 1.0
 tick_count = 6
 
-[node name="ResetScaleButton" type="Button" parent="VBoxContainer/SettingsContainer/HFlowContainer2"]
+[node name="ResetScaleButton" type="Button" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting"]
 layout_mode = 2
 tooltip_text = "reset scale to 1"
 text = "reset"
 
-[node name="EmptyHSeparator" type="HSeparator" parent="VBoxContainer/SettingsContainer"]
+[node name="NonSceneFiles" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions"]
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_yf8ba")
+theme_override_constants/separation = -4
 
-[node name="SupportedFileTypeLabel" type="Label" parent="VBoxContainer/SettingsContainer"]
-unique_name_in_owner = true
+[node name="UseOtherFileTypes" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles"]
 layout_mode = 2
-text = "Supported file types: tscn, png, gltf, glb, fbx, obj"
+tooltip_text = "If enabled, show all supported file types, not just \".scn\" and \".tscn\" files."
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles/UseOtherFileTypes"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 80.0
+text = "Allow non-scene file types:"
 autowrap_mode = 3
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/SettingsContainer"]
+[node name="AllowFileTypesButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles/UseOtherFileTypes"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 10
+
+[node name="SupportedFileTypeLabel" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+text = "Supported file types: scn, tscn, png, gltf, glb, fbx, obj"
+label_settings = SubResource("LabelSettings_xt2pj")
+autowrap_mode = 3
+
+[node name="Attribution" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution"]
+layout_mode = 2
+
+[node name="EmptyHSeparator" type="HSeparator" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "A plugin by "
+vertical_alignment = 2
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 tooltip_text = "Open repository on Github."
-text = "A plugin by cixil"
+text = "cixil"
 uri = "https://github.com/cixil/godot-scene-palette"
 
-[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = " and "
+vertical_alignment = 2
+
+[node name="LinkButton2" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Open repository on Github."
+text = "contributors"
+uri = "https://github.com/cixil/godot-scene-palette/graphs/contributors"
+
+[node name="LinkButton3" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Open repository on Github."
+text = "Report an issue"
+uri = "https://github.com/cixil/godot-scene-palette/issues"
+
+[node name="FavBarContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/FavBarContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ilgrm")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/FavBarContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="FavoritesBar" type="HFlowContainer" parent="VBoxContainer/FavBarContainer/MarginContainer"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Favebar header" type="HBoxContainer" parent="VBoxContainer/FavBarContainer/MarginContainer/FavoritesBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 1
+
+[node name="HeartIcon" type="TextureRect" parent="VBoxContainer/FavBarContainer/MarginContainer/FavoritesBar/Favebar header"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_fqbaj")
+stretch_mode = 4
+
+[node name="FavoritesLabel" type="Label" parent="VBoxContainer/FavBarContainer/MarginContainer/FavoritesBar/Favebar header"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+text = "Favorites: "
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -241,11 +460,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2(30, 0)
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Choose a directory to get started."
+label_settings = SubResource("LabelSettings_xt2pj")
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -257,12 +477,17 @@ size = Vector2i(478, 500)
 ok_button_text = "Select Current Folder"
 file_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/DirectoryPicker/HBoxContainer/ChooseDirectoryButton" to="." method="_on_choose_directory_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/DirectoryPicker/HBoxContainer/SaveDirToFavorites" to="." method="_on_save_dir_to_favorites_pressed"]
-[connection signal="toggled" from="VBoxContainer/FavoritesBar/Favebar header/FavoritesSettings" to="." method="_on_favorites_settings_toggled"]
-[connection signal="toggled" from="VBoxContainer/SettingsContainer/UseOtherFileTypes/AllowFileTypesButton" to="." method="_on_allow_file_types_button_toggled"]
-[connection signal="toggled" from="VBoxContainer/SettingsContainer/ShowLabels/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
-[connection signal="toggled" from="VBoxContainer/SettingsContainer/UsePreview/UsePreviewCheckButton" to="." method="_on_use_preview_check_button_toggled"]
-[connection signal="value_changed" from="VBoxContainer/SettingsContainer/HFlowContainer2/IconSceneScaleSlider" to="." method="_on_icon_scene_scale_slider_value_changed"]
-[connection signal="pressed" from="VBoxContainer/SettingsContainer/HFlowContainer2/ResetScaleButton" to="." method="_on_reset_scale_button_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kwcgi")
+}
+
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/DirectoryPicker/FavoritesSettings" to="." method="_on_favorites_settings_toggled"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/HBoxContainer/ChooseDirectoryButton" to="." method="_on_choose_directory_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/HBoxContainer/SaveDirToFavorites" to="." method="_on_save_dir_to_favorites_pressed"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/ShowLabels/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/UsePreview/UsePreviewCheckButton" to="." method="_on_use_preview_check_button_toggled"]
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting/IconSceneScaleSlider" to="." method="_on_icon_scene_scale_slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting/ResetScaleButton" to="." method="_on_reset_scale_button_pressed"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles/UseOtherFileTypes/AllowFileTypesButton" to="." method="_on_allow_file_types_button_toggled"]
 [connection signal="dir_selected" from="VBoxContainer/FileDialog" to="." method="_on_file_dialog_dir_selected"]
