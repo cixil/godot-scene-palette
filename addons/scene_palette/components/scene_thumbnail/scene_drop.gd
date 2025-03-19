@@ -33,16 +33,6 @@ func _create_display_label(path:String) -> String:
 	display_label = display_label.replace('_', ' ').replace('-', ' ')
 	return display_label
 
-func _make_preview_for_scene() -> void:
-	if instantiate_scene_preview:
-			var node:Node = load(_scene_path).instantiate()
-			if _scene_is_safe(node):
-				picture_point.add_child(node)
-				return
-	# if scene is not safe to instantiate, just keep a preview
-	_make_preview()
-
-
 func set_scene(path:String):
 	tooltip_text = path
 	_scene_path = path
