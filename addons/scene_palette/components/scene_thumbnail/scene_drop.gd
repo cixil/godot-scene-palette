@@ -25,7 +25,11 @@ func show_file_label(show:bool):
 	name_label.visible = show
 
 func _create_display_label(path:String) -> String:
-	var display_label = path.split('.tscn')[0].split('/')[-1]
+	var display_label = path.split('/')[-1]
+
+	display_label = path.split('.tscn')[0]
+	display_label = path.split('.scn')[0]
+
 	display_label = display_label.replace('_', ' ').replace('-', ' ')
 	return display_label
 
@@ -40,12 +44,12 @@ func set_scene(path:String):
 	match file_extension:
 		'png':
 			texture_rect.texture = load(_scene_path)
-		'tscn':
+		'tscn', 'scn':
 			if instantiate_scene_preview:
-					var node:Node = load(_scene_path).instantiate()
-					if _scene_is_safe(node):
-						picture_point.add_child(node)
-						return
+				var node:Node = load(_scene_path).instantiate()
+				if _scene_is_safe(node):
+					picture_point.add_child(node)
+					return
 			# if scene is not safe to instantiate, just keep a preview
 			_make_preview()
 		'obj':
