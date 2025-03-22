@@ -24,12 +24,13 @@ func show_file_label(show:bool):
 	name_label.text = _create_display_label(_scene_path)
 	name_label.visible = show
 
+## Converts a filepath to just the filename without the directory or file extension
+## If it's not a tscn or scn file, the file extension is left on
 func _create_display_label(path:String) -> String:
 	var display_label = path.split('/')[-1]
-
-	display_label = path.split('.tscn')[0]
-	display_label = path.split('.scn')[0]
-
+	display_label = display_label.trim_suffix('.tscn')
+	display_label = display_label.trim_suffix('.scn')
+	
 	display_label = display_label.replace('_', ' ').replace('-', ' ')
 	return display_label
 
