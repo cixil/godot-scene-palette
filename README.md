@@ -48,6 +48,8 @@ If you are working on a 2D project, you can instantiate the actual scenes to dis
 Feel free to submit an issue or PR for small feature requests.
 
 ## Like this Plugin?
+<a href='https://ko-fi.com/cixil'> <img height=32 src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' /></a>
+
 You may like my other plugin, [Snap Rotate](https://github.com/cixil/snap-rotate-godot-plugin/tree/main)
 
 #### Similar Plugins not by me:
