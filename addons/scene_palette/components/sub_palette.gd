@@ -2,7 +2,11 @@
 extends Control
 class_name PalettePluginSubPalette
 
-signal minimize_changed(value: bool)
+## This class acts as a shell of a palette. Palette items/title/etc and
+## settings are set by palette.gd
+
+signal minimize_changed(value:bool)
+signal flatten_changed(value:bool)
 
 @export var arrow_closed:Texture2D
 @export var arrow_open:Texture2D
@@ -12,6 +16,7 @@ signal minimize_changed(value: bool)
 @onready var sub_palette_container = %SubPaletteContainer
 @onready var content_container = %ContentContainer
 @onready var panel = %Panel
+@onready var collapse_sub_dir_button: CheckButton = %CollapseSubDirButton
 
 ## multiply the title color by this much for the background panel
 const PANEL_COLOR_AMT = 0.8
@@ -38,6 +43,7 @@ var minimized:bool = false:
 
 		title_minimize_button.set_pressed_no_signal(minimized)
 		minimize_changed.emit(minimized)
+
 
 func set_title(title:String):
 	title_minimize_button.text = title.replace('-', ' ').replace('_', ' ')
@@ -81,7 +87,71 @@ func add_subpalette(palette:PalettePluginSubPalette):
 
 func _on_title_minimize_button_toggled(toggled_on):
 	if expandable:
-		self.minimized = toggled_on		
+		self.minimized = toggled_on
 
 func _on_showin_file_system_button_pressed():
 	EditorInterface.get_file_system_dock().navigate_to_path(directory)
+
+
+########### Flatten SubPalettes ################################################
+# One level of subdirectories can be "flattened" (shown as part of the parent)
+# with the toggle in a palette's title bar.
+# Flattening works recursively, so if a node's child is flattened, then the
+# node is flattened, the child's flattened elements will also be flattened into
+# the node's.
+
+var _palette_scenes:Dictionary[PalettePluginSubPalette, Array] = {}  # SceneDrops belonging to SubPalettes
+var _palette_subs:Dictionary[PalettePluginSubPalette, Array] = {}  # SubPalettes belonging to SubPalettes
+
+func toggle_flatten_setting_visibility(is_visible:bool) -> void:
+	collapse_sub_dir_button.visible = is_visible
+
+var subdirs_flattened:bool = false:
+	set(value):
+		flatten_changed.emit(value)
+		collapse_sub_dir_button.button_pressed = value
+		if value:
+			if !subdirs_flattened:  # don't reflatten if already flattened, it will lose the correct scene-drop to sub-pallete references
+				_flatten_subdirs()
+		else:
+			_unflatten_subdirs()
+		subdirs_flattened = value
+
+func _on_collapse_sub_dir_button_toggled(toggled_on: bool) -> void:
+	subdirs_flattened = toggled_on
+
+func get_scene_drops() -> Array[PalettePluginSceneDrop]:
+	var arr:Array[PalettePluginSceneDrop]
+	arr.assign(scene_drop_grid_container.get_children())
+	return arr
+
+func get_sub_palettes() -> Array[PalettePluginSubPalette]:
+	var arr:Array[PalettePluginSubPalette]
+	arr.assign(sub_palette_container.get_children())
+	return arr
+
+func _flatten_subdirs() -> void:
+	for palette in get_sub_palettes():
+		var drops:Array[PalettePluginSceneDrop] = palette.get_scene_drops()
+		_palette_scenes[palette] = drops
+		for drop in drops:
+			drop.reparent(scene_drop_grid_container)
+		
+		_palette_subs[palette] = palette.get_sub_palettes()
+		for sub in _palette_subs[palette]:
+			if !palette.subdirs_flattened:
+				sub.reparent(sub_palette_container)
+		palette.hide()
+
+func _unflatten_subdirs() -> void:
+	for palette in get_sub_palettes():
+		palette.show()
+		
+		for drop in _palette_scenes.get(palette, []):
+			scene_drop_grid_container.remove_child(drop)
+			palette.add_item(drop)
+		
+		for sub in _palette_subs.get(palette, []):
+			if !palette.subdirs_flattened:
+				sub_palette_container.remove_child(sub)
+				palette.add_subpalette(sub)

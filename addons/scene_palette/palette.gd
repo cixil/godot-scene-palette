@@ -47,6 +47,9 @@ const allowed_file_types = ['scn', 'tscn', 'png', 'gltf', 'glb', 'fbx', 'obj']
 signal scene_scale_changed(amt:float)
 signal show_scene_label_toggled(toggled_on:bool)
 
+var is_settings_visible:bool
+signal setting_visibility_toggled(toggled_on:bool)
+
 var _loading_main_palette:bool = false
 
 var _current_dir:
@@ -72,31 +75,38 @@ var _current_dir:
 		top_level_sub_palette.set_title(palette_title)
 		top_level_sub_palette.expandable = false  # all subpalettes can be minimized, but not the top level
 		
-		# default settings for a new directory
-		var toggle_on:bool = false
-		var scene_scale:float = 1
-		
 		# if we are navigating to a favorite, load saved settings for it
 		if _current_dir_in_favorites():
 			var save_data:PalettePluginSaveData = _get_save_data()
 			_clean_save_data() # clear any stale references to minimized directories
 			var favorite = save_data.favorites[_current_dir]
 			top_level_sub_palette.set_color(favorite.color)
-			toggle_on = favorite.instantiate_scenes_for_previews 
-			scene_scale_setting.visible = toggle_on
-			scene_scale = favorite.get('scene_preview_scale', scene_scale)
+			instantiate_for_preview_button.button_pressed = favorite.instantiate_scenes_for_previews 
+			scene_scale_setting.visible = favorite.instantiate_scenes_for_previews 
 			show_scene_label_button.button_pressed = favorite.get('show_labels', false)
 			allow_file_types_button.button_pressed = favorite.get('allow_nonscene_files', false)
 		else:
+			# default settings for new directory
 			icon_scene_scale_slider.value = 1
 			scene_scale_setting.visible = false
+			instantiate_for_preview_button.button_pressed = false
+			icon_scene_scale_slider.value = 1
 		
-		instantiate_for_preview_button.button_pressed = toggle_on
 		_populate_scenes(top_level_sub_palette, _current_dir)
 		show_scene_label_toggled.emit(show_scene_label_button.button_pressed)
 		
-		await get_tree().create_timer(0.05).timeout # ¯\_(ツ)_/¯ don't work without it
-		icon_scene_scale_slider.value = scene_scale
+		# These settings must be loaded after scene drops are populated
+		if _current_dir_in_favorites():
+			var save_data:PalettePluginSaveData = _get_save_data()
+			var favorite = save_data.favorites[_current_dir]
+			var flattened_dirs:Dictionary = favorite.get("flattened_dirs", {})
+			top_level_sub_palette.subdirs_flattened = _current_dir in flattened_dirs.keys()
+			top_level_sub_palette.flatten_changed.connect(_on_sub_palette_flatten_changed.bind(_current_dir))
+			icon_scene_scale_slider.value = favorite.get('scene_preview_scale', 1)
+			
+		await get_tree().create_timer(0.05).timeout # ¯\_(ツ)_/¯ don't work without it, theres def a better way to wait until scene drops are added
+		scene_scale_changed.emit(icon_scene_scale_slider.value)  # if value is different from 1, set all of the scene drops to correct scale
+		
 		_loading_main_palette = false
 
 func _reload_palette():
@@ -105,14 +115,17 @@ func _reload_palette():
 ## Recursively create subpalettes for the specified directory
 func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 	var save_data:PalettePluginSaveData = _get_save_data()
-	var minimized_dirs: Dictionary
-
+	var minimized_dirs:Dictionary
+	var flattened_dirs:Dictionary
+	
 	if _current_dir_in_favorites():
 		var favorite = save_data.favorites[_current_dir]
 		minimized_dirs = favorite.get("minimized_dirs", {})
+		flattened_dirs = favorite.get("flattened_dirs", {})
 	else:
 		minimized_dirs = {}
-
+		flattened_dirs = {}
+	
 	var dir = DirAccess.open(dir_path)
 	if dir:
 		for dir_name in dir.get_directories():
@@ -120,10 +133,12 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 			var path = dir_path + '/' + dir_name
 			sub_palette.add_subpalette(new_sub_palette)
 			new_sub_palette.directory = path
+			new_sub_palette.flatten_changed.connect(_on_sub_palette_flatten_changed.bind(path))
 			new_sub_palette.minimized = minimized_dirs.has(path)
 			new_sub_palette.minimize_changed.connect(_on_sub_palette_minimize_changed.bind(path))
 			new_sub_palette.set_title(dir_name)
 			_populate_scenes(new_sub_palette, path)
+			new_sub_palette.subdirs_flattened = flattened_dirs.has(path)  # has to be set after sub palettes are populated - this might be a race condition?
 		for file_name in dir.get_files():
 			var file_extension:String = file_name.split('.')[-1]
 			var all_file_types_allowed:bool = allow_file_types_button.button_pressed
@@ -136,6 +151,9 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 				scene_drop.set_scene(dir_path +'/' + file_name)
 	else:
 		print(pp, 'No directory found for ', dir_path)
+	
+	setting_visibility_toggled.connect(sub_palette.toggle_flatten_setting_visibility)
+	sub_palette.toggle_flatten_setting_visibility(is_settings_visible)  # if settings are currently visible, show toggles
 
 
 func _ready():
@@ -171,9 +189,13 @@ func _clean_save_data():
 	if _current_dir_in_favorites():
 		var favorite:Dictionary = save_data.favorites[_current_dir]
 		var minimized_dirs = favorite.get_or_add("minimized_dirs", {})
+		var flattened_dirs = favorite.get_or_add("minimized_dirs", {})
 		for path in minimized_dirs.keys():
 			if not DirAccess.dir_exists_absolute(path):
 				save_data.favorites[_current_dir]["minimized_dirs"].erase(path)
+		for path in flattened_dirs.keys():
+			if not DirAccess.dir_exists_absolute(path):
+				save_data.favorites[_current_dir]["flattened_dirs"].erase(path)
 		_save_data(save_data)
 
 func _save_data(data:PalettePluginSaveData):
@@ -258,9 +280,10 @@ func _current_dir_in_favorites() -> bool:
 	var save_data:PalettePluginSaveData = _get_save_data()
 	return _current_dir in save_data.favorites
 
-
 ## toggle visibility of configuration options
 func _on_favorites_settings_toggled(toggled_on):
+	setting_visibility_toggled.emit(toggled_on)
+	is_settings_visible = toggled_on
 	for btn in favorites_bar.get_children():
 		if btn is PalettePluginFavoriteButton:
 			btn.set_settings_visibility(toggled_on)
@@ -268,6 +291,7 @@ func _on_favorites_settings_toggled(toggled_on):
 		animation_player.play('open_settings')
 	else:
 		animation_player.play_backwards('open_settings')
+
 
 func _on_show_scene_label_button_toggled(toggled_on):
 	show_scene_label_toggled.emit(toggled_on)
@@ -303,3 +327,17 @@ func _on_sub_palette_minimize_changed(toggled_on: bool, path: String) -> void:
 		else:
 			minimized_dirs.erase(path)
 		_save_data(save_data)
+
+func _on_sub_palette_flatten_changed(toggled_on:bool, path: String) -> void:
+	var save_data:PalettePluginSaveData = _get_save_data()
+	if _current_dir in save_data.favorites:
+		var flattened_dirs = save_data.favorites[_current_dir].get_or_add("flattened_dirs", {})
+		# using dict as hash set
+		if toggled_on:
+			flattened_dirs[path] = null
+		else:
+			flattened_dirs.erase(path)
+		_save_data(save_data)
+		
+	await get_tree().create_timer(0.05).timeout # ¯\_(ツ)_/¯ wait till scene drops are moved
+	scene_scale_changed.emit(icon_scene_scale_slider.value)  # set moved scene drops to correct scale

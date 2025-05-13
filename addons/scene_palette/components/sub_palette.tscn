@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvpntidioecs2"]
 
-[ext_resource type="Script" uid="uid://dypikg8a43l2o" path="res://addons/scene_palette/components/sub_palette.gd" id="1_refpc"]
-[ext_resource type="Texture2D" uid="uid://jha7vsi34hqx" path="res://addons/scene_palette/icons/arrow-side.png" id="2_k85x0"]
-[ext_resource type="Texture2D" uid="uid://b34khv1nr6ese" path="res://addons/scene_palette/icons/arrow-down.png" id="3_vnqya"]
-[ext_resource type="Texture2D" uid="uid://d3k8smgusttnx" path="res://addons/scene_palette/icons/file-folder.png" id="4_he5ce"]
+[ext_resource type="Script" uid="uid://bymjio6spmi76" path="res://addons/scene_palette/components/sub_palette.gd" id="1_refpc"]
+[ext_resource type="Texture2D" uid="uid://svry0nqs728a" path="res://addons/scene_palette/icons/arrow-side.png" id="2_k85x0"]
+[ext_resource type="Texture2D" uid="uid://skcslbv606g8" path="res://addons/scene_palette/icons/arrow-down.png" id="3_vnqya"]
+[ext_resource type="Texture2D" uid="uid://nbdw1qn8hahb" path="res://addons/scene_palette/icons/file-folder.png" id="4_he5ce"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65kn4"]
 bg_color = Color(0.333333, 0.368627, 0.431373, 0.243137)
@@ -64,11 +64,11 @@ theme_override_constants/margin_bottom = 2
 [node name="SubPalette" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/SubPalette"]
+[node name="HeaderBar" type="HBoxContainer" parent="MarginContainer/SubPalette"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TitleMinimizeButton" type="Button" parent="MarginContainer/SubPalette/HBoxContainer"]
+[node name="TitleMinimizeButton" type="Button" parent="MarginContainer/SubPalette/HeaderBar"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -81,7 +81,13 @@ toggle_mode = true
 text = "Subfolder name"
 icon = ExtResource("3_vnqya")
 
-[node name="ShowinFileSystemButton" type="Button" parent="MarginContainer/SubPalette/HBoxContainer"]
+[node name="CollapseSubDirButton" type="CheckButton" parent="MarginContainer/SubPalette/HeaderBar"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Flatten one level of subdirectories."
+text = "flat"
+
+[node name="ShowinFileSystemButton" type="Button" parent="MarginContainer/SubPalette/HeaderBar"]
 layout_mode = 2
 tooltip_text = "Show in FileSystem browser"
 theme_override_styles/normal = SubResource("StyleBoxFlat_3q58g")
@@ -102,5 +108,6 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="toggled" from="MarginContainer/SubPalette/HBoxContainer/TitleMinimizeButton" to="." method="_on_title_minimize_button_toggled"]
-[connection signal="pressed" from="MarginContainer/SubPalette/HBoxContainer/ShowinFileSystemButton" to="." method="_on_showin_file_system_button_pressed"]
+[connection signal="toggled" from="MarginContainer/SubPalette/HeaderBar/TitleMinimizeButton" to="." method="_on_title_minimize_button_toggled"]
+[connection signal="toggled" from="MarginContainer/SubPalette/HeaderBar/CollapseSubDirButton" to="." method="_on_collapse_sub_dir_button_toggled"]
+[connection signal="pressed" from="MarginContainer/SubPalette/HeaderBar/ShowinFileSystemButton" to="." method="_on_showin_file_system_button_pressed"]

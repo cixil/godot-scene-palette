@@ -13,5 +13,6 @@ func add_favorite(directory, instantiate_scenes, color=DEFAULT_BUTTON_COLOR):
 		color = color,
 		scene_preview_scale = 1,
 		show_labels = true,
-		minimized_dirs = {}
+		minimized_dirs = {},
+		flattened_subdirs = {}
 	}
