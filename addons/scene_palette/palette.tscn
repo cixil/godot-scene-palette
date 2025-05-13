@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://blawi4i3chdo3"]
 
-[ext_resource type="Script" uid="uid://cjgcifn6q2xum" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
+[ext_resource type="Script" uid="uid://qm0ygc87ab70" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
 [ext_resource type="PackedScene" uid="uid://bvpntidioecs2" path="res://addons/scene_palette/components/sub_palette.tscn" id="2_tthq0"]
 [ext_resource type="PackedScene" uid="uid://cypob1bi5kovv" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop.tscn" id="3_wqrsw"]
 [ext_resource type="PackedScene" uid="uid://wfk2vnuru8d" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.tscn" id="4_ynrw4"]
