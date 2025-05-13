@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://wfk2vnuru8d"]
 
-[ext_resource type="Script" uid="uid://co20lkiwh4nsp" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.gd" id="1_vdv7t"]
-[ext_resource type="Script" uid="uid://b3o6koenfojuc" path="res://addons/scene_palette/components/favorite_button/Button.gd" id="2_8ifhe"]
-[ext_resource type="Texture2D" uid="uid://bwix4q3rurii3" path="res://addons/scene_palette/icons/palette.png" id="2_hpqcp"]
-[ext_resource type="Texture2D" uid="uid://e4xx0y6gp4mu" path="res://addons/scene_palette/icons/eye_dropper.png" id="4_0krmm"]
+[ext_resource type="Script" uid="uid://c6ns0ikncceit" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.gd" id="1_vdv7t"]
+[ext_resource type="Script" uid="uid://dsx1vbl3nbqov" path="res://addons/scene_palette/components/favorite_button/Button.gd" id="2_8ifhe"]
+[ext_resource type="Texture2D" uid="uid://d2ders76y8763" path="res://addons/scene_palette/icons/palette.png" id="2_hpqcp"]
+[ext_resource type="Texture2D" uid="uid://bv1nujwl5lfsu" path="res://addons/scene_palette/icons/eye_dropper.png" id="4_0krmm"]
 
 [node name="FavoriteButton" type="HBoxContainer"]
 offset_right = 40.0

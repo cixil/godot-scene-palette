@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvpntidioecs2"]
 
-[ext_resource type="Script" uid="uid://bymjio6spmi76" path="res://addons/scene_palette/components/sub_palette.gd" id="1_refpc"]
-[ext_resource type="Texture2D" uid="uid://svry0nqs728a" path="res://addons/scene_palette/icons/arrow-side.png" id="2_k85x0"]
-[ext_resource type="Texture2D" uid="uid://skcslbv606g8" path="res://addons/scene_palette/icons/arrow-down.png" id="3_vnqya"]
-[ext_resource type="Texture2D" uid="uid://nbdw1qn8hahb" path="res://addons/scene_palette/icons/file-folder.png" id="4_he5ce"]
+[ext_resource type="Script" uid="uid://cexgalysv1w24" path="res://addons/scene_palette/components/sub_palette.gd" id="1_refpc"]
+[ext_resource type="Texture2D" uid="uid://ctldgrobprn3a" path="res://addons/scene_palette/icons/arrow-side.png" id="2_k85x0"]
+[ext_resource type="Texture2D" uid="uid://dg43kqqa73uxa" path="res://addons/scene_palette/icons/arrow-down.png" id="3_vnqya"]
+[ext_resource type="Texture2D" uid="uid://b43s7q6v2vb4" path="res://addons/scene_palette/icons/file-folder.png" id="4_he5ce"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65kn4"]
 bg_color = Color(0.333333, 0.368627, 0.431373, 0.243137)

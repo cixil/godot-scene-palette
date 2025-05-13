@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://blawi4i3chdo3"]
 
-[ext_resource type="Script" uid="uid://cmst2l16fg65f" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
+[ext_resource type="Script" uid="uid://cjgcifn6q2xum" path="res://addons/scene_palette/palette.gd" id="1_wgshj"]
 [ext_resource type="PackedScene" uid="uid://bvpntidioecs2" path="res://addons/scene_palette/components/sub_palette.tscn" id="2_tthq0"]
 [ext_resource type="PackedScene" uid="uid://cypob1bi5kovv" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop.tscn" id="3_wqrsw"]
 [ext_resource type="PackedScene" uid="uid://wfk2vnuru8d" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.tscn" id="4_ynrw4"]
-[ext_resource type="Texture2D" uid="uid://bbm6u1clnom25" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
-[ext_resource type="Texture2D" uid="uid://ch6vwrjh76xjg" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
+[ext_resource type="Texture2D" uid="uid://dukiut8nk74i" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
+[ext_resource type="Texture2D" uid="uid://bi81yncexejj1" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
 [ext_resource type="StyleBox" uid="uid://y3ney3lturj3" path="res://addons/scene_palette/styles/back_panel.tres" id="7_ilgrm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xt2pj"]
