@@ -1,5 +1,5 @@
 @tool
-extends Control
+extends MarginContainer
 
 # TODO: when settings are expanded, and plugin dock width is short, wrapping is weird. fix
 # TODO: Add expand all/minimize all buttons
