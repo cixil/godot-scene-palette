@@ -7,9 +7,10 @@ const DEFAULT_BUTTON_COLOR = '#0e1521'
 #@export var favorites:Array[PalettePluginFavorite] = []
 @export var favorites:Dictionary
 
-func add_favorite(directory, instantiate_scenes, color=DEFAULT_BUTTON_COLOR):
+func add_favorite(directory:String, mode:PalettePluginSceneDrop.display_modes, color=DEFAULT_BUTTON_COLOR):
 	favorites[directory] = {
-		instantiate_scenes_for_previews = instantiate_scenes,
+		#instantiate_scenes_for_previews = instantiate_scenes,
+		mode = mode,
 		color = color,
 		scene_preview_scale = 1,
 		show_labels = true,

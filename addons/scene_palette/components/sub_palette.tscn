@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvpntidioecs2"]
+[gd_scene format=3 uid="uid://bvpntidioecs2"]
 
 [ext_resource type="Script" uid="uid://car65kfwh3rsf" path="res://addons/scene_palette/components/sub_palette.gd" id="1_refpc"]
-[ext_resource type="Texture2D" uid="uid://djkikw5bibcc4" path="res://addons/scene_palette/icons/arrow-side.png" id="2_k85x0"]
-[ext_resource type="Texture2D" uid="uid://u8n744wuh87v" path="res://addons/scene_palette/icons/arrow-down.png" id="3_vnqya"]
-[ext_resource type="Texture2D" uid="uid://dtr1mvnxsqbfu" path="res://addons/scene_palette/icons/file-folder.png" id="4_he5ce"]
+[ext_resource type="Texture2D" uid="uid://bn2qwty60jnn" path="res://addons/scene_palette/icons/arrow-side.png" id="2_k85x0"]
+[ext_resource type="Texture2D" uid="uid://c8s0j6mffakgg" path="res://addons/scene_palette/icons/arrow-down.png" id="3_vnqya"]
+[ext_resource type="Texture2D" uid="uid://dbvxfydx56jly" path="res://addons/scene_palette/icons/file-folder.png" id="4_he5ce"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65kn4"]
 bg_color = Color(0.333333, 0.368627, 0.431373, 0.243137)
@@ -34,7 +34,7 @@ content_margin_bottom = 1.0
 bg_color = Color(0.6, 0.6, 0.6, 0.203922)
 corner_radius_top_right = 6
 
-[node name="SubPalette" type="MarginContainer"]
+[node name="SubPalette" type="MarginContainer" unique_id=514447167]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 26.0
@@ -49,26 +49,26 @@ script = ExtResource("1_refpc")
 arrow_closed = ExtResource("2_k85x0")
 arrow_open = ExtResource("3_vnqya")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1458069964]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_65kn4")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=466580587]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 2
 
-[node name="SubPalette" type="VBoxContainer" parent="MarginContainer"]
+[node name="SubPalette" type="VBoxContainer" parent="MarginContainer" unique_id=1076280302]
 layout_mode = 2
 
-[node name="HeaderBar" type="HBoxContainer" parent="MarginContainer/SubPalette"]
+[node name="HeaderBar" type="HBoxContainer" parent="MarginContainer/SubPalette" unique_id=234994258]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TitleMinimizeButton" type="Button" parent="MarginContainer/SubPalette/HeaderBar"]
+[node name="TitleMinimizeButton" type="Button" parent="MarginContainer/SubPalette/HeaderBar" unique_id=1836906419]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -81,30 +81,30 @@ toggle_mode = true
 text = "Subfolder name"
 icon = ExtResource("3_vnqya")
 
-[node name="CollapseSubDirButton" type="CheckButton" parent="MarginContainer/SubPalette/HeaderBar"]
+[node name="CollapseSubDirButton" type="CheckButton" parent="MarginContainer/SubPalette/HeaderBar" unique_id=605533129]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Flatten one level of subdirectories."
 text = "flat"
 
-[node name="ShowinFileSystemButton" type="Button" parent="MarginContainer/SubPalette/HeaderBar"]
+[node name="ShowinFileSystemButton" type="Button" parent="MarginContainer/SubPalette/HeaderBar" unique_id=344565962]
 layout_mode = 2
 tooltip_text = "Show in FileSystem browser"
 theme_override_styles/normal = SubResource("StyleBoxFlat_3q58g")
 icon = ExtResource("4_he5ce")
 
-[node name="ContentContainer" type="VBoxContainer" parent="MarginContainer/SubPalette"]
+[node name="ContentContainer" type="VBoxContainer" parent="MarginContainer/SubPalette" unique_id=2127191583]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SceneDropGridContainer" type="HFlowContainer" parent="MarginContainer/SubPalette/ContentContainer"]
+[node name="SceneDropGridContainer" type="HFlowContainer" parent="MarginContainer/SubPalette/ContentContainer" unique_id=1040302487]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SubPaletteContainerContainer" type="MarginContainer" parent="MarginContainer/SubPalette/ContentContainer"]
+[node name="SubPaletteContainerContainer" type="MarginContainer" parent="MarginContainer/SubPalette/ContentContainer" unique_id=1625632370]
 layout_mode = 2
 
-[node name="SubPaletteContainer" type="VBoxContainer" parent="MarginContainer/SubPalette/ContentContainer/SubPaletteContainerContainer"]
+[node name="SubPaletteContainer" type="VBoxContainer" parent="MarginContainer/SubPalette/ContentContainer/SubPaletteContainerContainer" unique_id=946299887]
 unique_name_in_owner = true
 layout_mode = 2
 

@@ -4,13 +4,27 @@
 [ext_resource type="PackedScene" uid="uid://bvpntidioecs2" path="res://addons/scene_palette/components/sub_palette.tscn" id="2_tthq0"]
 [ext_resource type="PackedScene" uid="uid://cypob1bi5kovv" path="res://addons/scene_palette/components/scene_thumbnail/scene_drop.tscn" id="3_wqrsw"]
 [ext_resource type="PackedScene" uid="uid://wfk2vnuru8d" path="res://addons/scene_palette/components/favorite_button/FavoriteButton.tscn" id="4_ynrw4"]
-[ext_resource type="Texture2D" uid="uid://b8sr6lj3gvokt" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
-[ext_resource type="Texture2D" uid="uid://cikn33hitvmkf" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
-[ext_resource type="StyleBox" uid="uid://y3ney3lturj3" path="res://addons/scene_palette/styles/back_panel.tres" id="7_ilgrm"]
+[ext_resource type="Texture2D" uid="uid://cvnavbciekkyg" path="res://addons/scene_palette/icons/heart.png" id="5_fqbaj"]
+[ext_resource type="Texture2D" uid="uid://dju7ysy8qdrsq" path="res://addons/scene_palette/icons/wrench.png" id="6_q5myn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ukyed"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xt2pj"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_xt2pj"]
 font_size = 14
 font_color = Color(0.494342, 0.484388, 0.470806, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hr0i8"]
+bg_color = Color(0.2520276, 0.25202766, 0.25202763, 0.54509807)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilgrm"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)
@@ -186,7 +200,6 @@ layout_mode = 2
 
 [node name="Panel" type="Panel" parent="VBoxContainer/VBoxContainer/SettingContainer" unique_id=1891864635]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("7_ilgrm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer" unique_id=634833483]
 layout_mode = 2
@@ -196,62 +209,97 @@ visible = false
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="SettingsContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener" unique_id=141495836]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener" unique_id=231337152]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ukyed")
+theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_ukyed")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_ukyed")
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_xt2pj")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_xt2pj")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_xt2pj")
+current_tab = 1
+tabs_visible = false
+
+[node name="SettingsTab" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer" unique_id=43648917]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
+
+[node name="SettingsContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab" unique_id=141495836]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 5
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer" unique_id=614589575]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer" unique_id=614589575]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_right = 5
 
-[node name="SettingOptions" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer" unique_id=293586934]
+[node name="SettingOptions" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer" unique_id=293586934]
 layout_mode = 2
 
-[node name="SettingsHeader" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions" unique_id=1505384504]
-visible = false
+[node name="SettingsHeader" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions" unique_id=1505384504]
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Palette Display Settings.
 
 If currently viewing a favorite palette, settings will be saved for this palette."
 
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader" unique_id=1285328700]
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader" unique_id=1285328700]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 size_flags_vertical = 4
 texture = ExtResource("6_q5myn")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader" unique_id=929388182]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader" unique_id=929388182]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
+size_flags_horizontal = 6
 text = "Palette Settings"
-autowrap_mode = 3
+horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader" unique_id=413908288]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/SettingsHeader" unique_id=413908288]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 2
 size_flags_vertical = 4
 texture = ExtResource("6_q5myn")
 stretch_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions" unique_id=1630825207]
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions" unique_id=1630825207]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
-text = "Settings are saved per palette. Select a favorite palette to save changed settings."
+text = "Settings are saved per palette. If palette is not in favorites, settings will be lost."
 label_settings = SubResource("LabelSettings_xt2pj")
 autowrap_mode = 3
 
-[node name="ShowLabels" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions" unique_id=587043948]
+[node name="EmptyHSeparator2" type="HSeparator" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions" unique_id=371336862]
+layout_mode = 2
+
+[node name="ShowLabels" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions" unique_id=1078467681]
 layout_mode = 2
 tooltip_text = "Show scene labels:
 
 Show filenames under thumbnails."
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/ShowLabels" unique_id=1653306897]
+[node name="Panel" type="Panel" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/ShowLabels" unique_id=1005604676]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hr0i8")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/ShowLabels" unique_id=1972270977]
+layout_mode = 2
+
+[node name="ShowLabels" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/ShowLabels/MarginContainer" unique_id=587043948]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/ShowLabels/MarginContainer/ShowLabels" unique_id=1653306897]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -259,45 +307,145 @@ size_flags_stretch_ratio = 80.0
 text = "Show labels: "
 autowrap_mode = 3
 
-[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/ShowLabels" unique_id=1978070978]
+[node name="ShowSceneLabelButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/ShowLabels/MarginContainer/ShowLabels" unique_id=1978070978]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="UsePreview" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions" unique_id=1621979701]
+[node name="NonSceneFileTypes" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions" unique_id=1342098341]
 layout_mode = 2
-tooltip_text = "Instantiate Scene for Previews:
+tooltip_text = "If enabled, show all supported file types, not just \".scn\" and \".tscn\" files."
 
-Turned on:
-Instantiates the scene and centers it in the preview window.
-Suitable for small 2D scenes, provides a better thumbnail than
-the editor preview. Ignores scenes that are not 2D or that
-contain a camera.
-CAUTION: This will actually load and instantiate the scene,
-it is great for small assets, but may not be suitable for large
-scenes or a directory that contains a lot of files.
+[node name="Panel" type="Panel" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes" unique_id=543486950]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hr0i8")
 
-Turned off:
-Uses the editor preview. This is generated from the visible
-window when you last saved scene. If the thumbnail is blank,
-open the scene, center it and save it. This should update
-the thumbnail.
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes" unique_id=332992995]
+layout_mode = 2
 
-If working on a favorite palette, preference is saved per palette."
+[node name="NonSceneFiles" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes/MarginContainer" unique_id=757663773]
+layout_mode = 2
+theme_override_constants/separation = -4
 
-[node name="UsePreviewLabel" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/UsePreview" unique_id=656562614]
+[node name="UseOtherFileTypes" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes/MarginContainer/NonSceneFiles" unique_id=1794873297]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes/MarginContainer/NonSceneFiles/UseOtherFileTypes" unique_id=1650777401]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 80.0
-text = "Instantiate Scenes for Previews: "
+text = "Allow non-scene file types:"
 autowrap_mode = 3
 
-[node name="UsePreviewCheckButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/UsePreview" unique_id=1462243926]
+[node name="AllowFileTypesButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes/MarginContainer/NonSceneFiles/UseOtherFileTypes" unique_id=1454221610]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 10
 
-[node name="SceneScaleSetting" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions" unique_id=1870266727]
+[node name="SupportedFileTypeLabel" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes/MarginContainer/NonSceneFiles" unique_id=2140390520]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+text = "Supported file types: scn, tscn, png, gltf, glb, fbx, obj"
+label_settings = SubResource("LabelSettings_xt2pj")
+autowrap_mode = 3
+
+[node name="DisplayModeSettings" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions" unique_id=571636996]
+layout_mode = 2
+tooltip_text = "Thumbnail Display Mode:
+How thumbnails should be generated.
+
+Editor Preview:
+Uses Godot's built-in editor preview. If this shows up blank, 
+you can reset it by opening the scene, centering the visible 
+components in the viewport and saving it. Click the favorite 
+palette again to refresh it and see the new preview.
+
+PNG Files:
+Searches recursively for png files with the same name as the `.tscn` 
+or `.scn` file within the `png_file_directory` (defaults to the palette's 
+directory). If none is found then it uses the editor preview mode.
+
+Instantiate Files:
+This can be used for small scenes such as pixel art. The actual
+scene is instantiated and shone in the preview. Scenes that are 
+not 2D or contain cameras will be ignored."
+
+[node name="Panel" type="Panel" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings" unique_id=767108837]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hr0i8")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings" unique_id=1075305668]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer" unique_id=2101876792]
+layout_mode = 2
+
+[node name="ImageThumbnails" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer" unique_id=1379407960]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/ImageThumbnails" unique_id=1487713567]
+layout_mode = 2
+text = "Thumbnail Display Mode:"
+
+[node name="DisplayModeOption" type="OptionButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/ImageThumbnails" unique_id=1795330431]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Thumbnail Display Mode:
+How thumbnails should be generated.
+
+Editor Preview:
+Uses Godot's built-in editor preview. If this shows up blank, 
+you can reset it by opening the scene, centering the visible 
+components in the viewport and saving it. Click the favorite 
+palette again to refresh it and see the new preview.
+
+PNG Files:
+Searches recursively for png files with the same name as the `.tscn` 
+or `.scn` file within the `png_file_directory` (defaults to the palette's 
+directory). If none is found then it uses the editor preview mode.
+
+Instantiate Files:
+This can be used for small scenes such as pixel art. The actual
+scene is instantiated and shone in the preview. Scenes that are 
+not 2D or contain cameras will be ignored."
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Editor Preview"
+popup/item_0/id = 0
+popup/item_1/text = "PNG Files"
+popup/item_1/id = 1
+popup/item_2/text = "Instantiate scenes"
+popup/item_2/id = 2
+
+[node name="SubOptions" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer" unique_id=2011381859]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions" unique_id=1268153327]
+layout_mode = 2
+
+[node name="ImageDirectorySetting" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer" unique_id=1713110784]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/ImageDirectorySetting" unique_id=2070801964]
+layout_mode = 2
+text = "PNG File Directory: "
+
+[node name="ImageDirectoryPickerButton" type="Button" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/ImageDirectorySetting" unique_id=61546668]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Choose directory"
+text_overrun_behavior = 5
+
+[node name="SceneScaleSetting" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer" unique_id=1870266727]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -305,14 +453,14 @@ tooltip_text = "Scene Preview Scale:
 
 Adjust size of scene previews. Only works if \"Instantiate scene for previews is turned on\"."
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting" unique_id=270122546]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/SceneScaleSetting" unique_id=270122546]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Scene Preview Scale"
 autowrap_mode = 3
 
-[node name="IconSceneScaleSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting" unique_id=1106369569]
+[node name="IconSceneScaleSlider" type="HSlider" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/SceneScaleSetting" unique_id=1106369569]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -322,64 +470,35 @@ step = 0.01
 value = 1.0
 tick_count = 6
 
-[node name="ResetScaleButton" type="Button" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting" unique_id=1078188128]
+[node name="ResetScaleButton" type="Button" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/SceneScaleSetting" unique_id=1078188128]
 layout_mode = 2
 tooltip_text = "reset scale to 1"
 text = "reset"
 
-[node name="NonSceneFiles" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions" unique_id=757663773]
-layout_mode = 2
-theme_override_constants/separation = -4
-
-[node name="UseOtherFileTypes" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles" unique_id=1794873297]
-layout_mode = 2
-tooltip_text = "If enabled, show all supported file types, not just \".scn\" and \".tscn\" files."
-
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles/UseOtherFileTypes" unique_id=1650777401]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 80.0
-text = "Allow non-scene file types:"
-autowrap_mode = 3
-
-[node name="AllowFileTypesButton" type="CheckButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles/UseOtherFileTypes" unique_id=1454221610]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="SupportedFileTypeLabel" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles" unique_id=2140390520]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-text = "Supported file types: scn, tscn, png, gltf, glb, fbx, obj"
-label_settings = SubResource("LabelSettings_xt2pj")
-autowrap_mode = 3
-
-[node name="Attribution" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer" unique_id=2054636950]
+[node name="Attribution" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer" unique_id=2054636950]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_right = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution" unique_id=2026537248]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution" unique_id=2026537248]
 layout_mode = 2
 
-[node name="EmptyHSeparator" type="HSeparator" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer" unique_id=1150277242]
+[node name="EmptyHSeparator" type="HSeparator" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer" unique_id=1150277242]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer" unique_id=2085194109]
+[node name="HBoxContainer" type="HFlowContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer" unique_id=2085194109]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=410814388]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=410814388]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "A plugin by "
 vertical_alignment = 2
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=1069604750]
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=1069604750]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -387,14 +506,14 @@ tooltip_text = "Open repository on Github."
 text = "cixil"
 uri = "https://github.com/cixil/godot-scene-palette"
 
-[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=512170180]
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=512170180]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = " and "
 vertical_alignment = 2
 
-[node name="LinkButton2" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=939941527]
+[node name="LinkButton2" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer/HBoxContainer" unique_id=939941527]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -402,13 +521,27 @@ tooltip_text = "Open repository on Github."
 text = "contributors"
 uri = "https://github.com/cixil/godot-scene-palette/graphs/contributors"
 
-[node name="LinkButton3" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/Attribution/VBoxContainer" unique_id=499896101]
+[node name="LinkButton3" type="LinkButton" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/Attribution/VBoxContainer" unique_id=499896101]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "Open repository on Github."
 text = "Report an issue"
 uri = "https://github.com/cixil/godot-scene-palette/issues"
+
+[node name="ChooseDirectoryTab" type="MarginContainer" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer" unique_id=1605907710]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/ChooseDirectoryTab" unique_id=1064124064]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Choose a directory to show settings."
+label_settings = SubResource("LabelSettings_xt2pj")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="FavBarContainer" type="MarginContainer" parent="VBoxContainer" unique_id=659682998]
 layout_mode = 2
@@ -465,9 +598,10 @@ autowrap_mode = 3
 
 [node name="FileDialog" type="FileDialog" parent="VBoxContainer" unique_id=139599075]
 unique_name_in_owner = true
+oversampling_override = 1.0
 title = "Open a Directory"
 initial_position = 2
-size = Vector2i(478, 500)
+size = Vector2i(486, 500)
 ok_button_text = "Select Current Folder"
 file_mode = 2
 
@@ -477,9 +611,9 @@ libraries/ = SubResource("AnimationLibrary_kwcgi")
 [connection signal="toggled" from="VBoxContainer/VBoxContainer/DirectoryPicker/FavoritesSettings" to="." method="_on_favorites_settings_toggled"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/HBoxContainer/ChooseDirectoryButton" to="." method="_on_choose_directory_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/DirectoryPicker/VBoxContainer/HBoxContainer/SaveDirToFavorites" to="." method="_on_save_dir_to_favorites_pressed"]
-[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/ShowLabels/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
-[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/UsePreview/UsePreviewCheckButton" to="." method="_on_use_preview_check_button_toggled"]
-[connection signal="value_changed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting/IconSceneScaleSlider" to="." method="_on_icon_scene_scale_slider_value_changed"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/SceneScaleSetting/ResetScaleButton" to="." method="_on_reset_scale_button_pressed"]
-[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/SettingsContainer/MarginContainer/SettingOptions/NonSceneFiles/UseOtherFileTypes/AllowFileTypesButton" to="." method="_on_allow_file_types_button_toggled"]
-[connection signal="dir_selected" from="VBoxContainer/FileDialog" to="." method="_on_file_dialog_dir_selected"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/ShowLabels/MarginContainer/ShowLabels/ShowSceneLabelButton" to="." method="_on_show_scene_label_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/NonSceneFileTypes/MarginContainer/NonSceneFiles/UseOtherFileTypes/AllowFileTypesButton" to="." method="_on_allow_file_types_button_toggled"]
+[connection signal="item_selected" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/ImageThumbnails/DisplayModeOption" to="." method="_on_display_mode_option_item_selected"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/ImageDirectorySetting/ImageDirectoryPickerButton" to="." method="_on_image_directory_picker_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/SceneScaleSetting/IconSceneScaleSlider" to="." method="_on_icon_scene_scale_slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/SettingContainer/VBoxContainer/SettingsOpener/TabContainer/SettingsTab/SettingsContainer/MarginContainer/SettingOptions/DisplayModeSettings/MarginContainer/VBoxContainer/SubOptions/VBoxContainer/SceneScaleSetting/ResetScaleButton" to="." method="_on_reset_scale_button_pressed"]

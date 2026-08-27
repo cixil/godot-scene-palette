@@ -29,12 +29,15 @@ var top_level_sub_palette:PalettePluginSubPalette
 @onready var file_dialog = %FileDialog
 @onready var choose_directory_button = %ChooseDirectoryButton
 @onready var save_dir_to_favorites = %SaveDirToFavorites
-@onready var instantiate_for_preview_button = %UsePreviewCheckButton
 @onready var icon_scene_scale_slider = %IconSceneScaleSlider
 @onready var show_scene_label_button = %ShowSceneLabelButton
 @onready var supported_file_type_label: Label = %SupportedFileTypeLabel
 @onready var allow_file_types_button: CheckButton = %AllowFileTypesButton
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var image_directory_setting: HFlowContainer = %ImageDirectorySetting
+@onready var image_directory_picker_button: Button = %ImageDirectoryPickerButton
+@onready var display_mode_option: OptionButton = %DisplayModeOption
+@onready var settings_tab: MarginContainer = %SettingsTab
 
 
 # have save data to remember favorite palettes
@@ -52,15 +55,19 @@ signal setting_visibility_toggled(toggled_on:bool)
 
 var _loading_main_palette:bool = false
 
-var _current_dir:
+var _current_dir:String:
 	set(value):
-		# setting button_pressed values below can trigget this function
+		# setting button_pressed values below can trigger this function
 		# to be called twice in a row, this variable is a quick fix to not allow
 		# duplicate calls which in some cases can duplicate scene drop and subpalette instances.
 		if _loading_main_palette:
 			return
 		_loading_main_palette = true
-
+		
+		# In the beginning a "choose directory" label is displayed in lieu of settings
+		# This ensures settings are always visible after a directory is selected.
+		settings_tab.show()
+		
 		_current_dir = value
 		
 		# remove top level palette
@@ -79,17 +86,32 @@ var _current_dir:
 		if _current_dir_in_favorites():
 			var save_data:PalettePluginSaveData = _get_save_data()
 			_clean_save_data() # clear any stale references to minimized directories
-			var favorite = save_data.favorites[_current_dir]
+			var favorite:Dictionary = save_data.favorites[_current_dir]
 			top_level_sub_palette.set_color(favorite.color)
-			instantiate_for_preview_button.button_pressed = favorite.instantiate_scenes_for_previews 
-			scene_scale_setting.visible = favorite.instantiate_scenes_for_previews 
+			
+			# add a default value to be compatible with versions <= 2.1.4 that don't use mode
+			if not favorite.has("mode"):
+				if favorite.has("instantiate_scenes_for_previews"):
+					if favorite.get("instantiate_scenes_for_previews"):
+						favorite.mode = PalettePluginSceneDrop.display_modes.INSTANTIATE_SCENE
+					else:
+						favorite.mode = PalettePluginSceneDrop.display_modes.EDITOR_THUMBNAIL
+				else:
+					favorite.mode = PalettePluginSceneDrop.display_modes.EDITOR_THUMBNAIL
+			
+			display_mode_option.select(favorite.mode)
+			_set_display_mode(favorite.mode)
+			if favorite.has("image_preview_dir"):
+				image_directory_picker_button.text = favorite['image_preview_dir']
+			else:
+				image_directory_picker_button.text = _current_dir
 			show_scene_label_button.button_pressed = favorite.get('show_labels', false)
 			allow_file_types_button.button_pressed = favorite.get('allow_nonscene_files', false)
 		else:
 			# default settings for new directory
 			icon_scene_scale_slider.value = 1
 			scene_scale_setting.visible = false
-			instantiate_for_preview_button.button_pressed = false
+			display_mode_option.select(0)
 			icon_scene_scale_slider.value = 1
 		
 		_populate_scenes(top_level_sub_palette, _current_dir)
@@ -111,6 +133,18 @@ var _current_dir:
 
 func _reload_palette():
 	_current_dir = _current_dir
+
+func _set_display_mode(mode) -> void:
+	image_directory_setting.hide()
+	scene_scale_setting.hide()
+	match mode:
+		PalettePluginSceneDrop.display_modes.EDITOR_THUMBNAIL:
+			pass
+		PalettePluginSceneDrop.display_modes.IMAGE_FILE:
+			image_directory_setting.show()
+		PalettePluginSceneDrop.display_modes.INSTANTIATE_SCENE:
+			scene_scale_setting.show()
+			
 
 ## Recursively create subpalettes for the specified directory
 func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
@@ -145,7 +179,8 @@ func _populate_scenes(sub_palette:PalettePluginSubPalette, dir_path:String):
 			if file_extension == 'tscn' or file_extension == 'scn' or (all_file_types_allowed and file_extension in allowed_file_types):
 				var scene_drop:PalettePluginSceneDrop = scene_drop_scene.instantiate()
 				sub_palette.add_item(scene_drop)
-				scene_drop.instantiate_scene_preview = instantiate_for_preview_button.button_pressed
+				scene_drop.set_display_mode(display_mode_option.selected)
+				scene_drop.set_png_directory(image_directory_picker_button.text)
 				scene_scale_changed.connect(scene_drop.adjust_scale)
 				show_scene_label_toggled.connect(scene_drop.show_file_label)
 				scene_drop.set_scene(dir_path +'/' + file_name)
@@ -201,8 +236,15 @@ func _clean_save_data():
 func _save_data(data:PalettePluginSaveData):
 	ResourceSaver.save(data, save_data_path)
 
+var temp_dialog:FileDialog
+
 func _on_choose_directory_button_pressed():
-	file_dialog.show()
+	temp_dialog = file_dialog.duplicate()
+	add_child(temp_dialog)
+	temp_dialog.dir_selected.connect(_on_file_dialog_dir_selected)
+	temp_dialog.show()
+	
+	#file_dialog.show()
 
 func _on_file_dialog_dir_selected(dir):
 	_current_dir = dir
@@ -211,16 +253,6 @@ func _on_file_dialog_dir_selected(dir):
 		save_dir_to_favorites.show()
 	else:
 		save_dir_to_favorites.hide()
-
-func _on_use_preview_check_button_toggled(toggled_on):
-	top_level_sub_palette.instantiate_previews(toggled_on)
-	if _current_dir_in_favorites():
-		var save_data = _get_save_data()
-		save_data.favorites[_current_dir].instantiate_scenes_for_previews = toggled_on
-		_save_data(save_data)
-
-	scene_scale_setting.visible = toggled_on
-
 
 ## Load favorites buttons
 func _populate_favorites_tab_bar():
@@ -271,7 +303,7 @@ func _on_save_dir_to_favorites_pressed():
 	if _current_dir_in_favorites():
 			print(pp, _current_dir, ' is already in favorites')
 	else:
-		save_data.add_favorite(_current_dir, instantiate_for_preview_button.button_pressed)
+		save_data.add_favorite(_current_dir, display_mode_option.selected)
 		_save_data(save_data)
 		_populate_favorites_tab_bar()
 		save_dir_to_favorites.hide()
@@ -341,3 +373,29 @@ func _on_sub_palette_flatten_changed(toggled_on:bool, path: String) -> void:
 		
 	await get_tree().create_timer(0.05).timeout # ¯\_(ツ)_/¯ wait till scene drops are moved
 	scene_scale_changed.emit(icon_scene_scale_slider.value)  # set moved scene drops to correct scale
+
+
+func _on_display_mode_option_item_selected(index: int) -> void:
+	top_level_sub_palette.set_display_mode(index)
+	if _current_dir_in_favorites():
+		var save_data = _get_save_data()
+		save_data.favorites[_current_dir].mode = index
+		_save_data(save_data)
+	_set_display_mode(index)
+	_reload_palette()
+
+# TODO document temp_dialog
+func _on_image_directory_picker_button_pressed() -> void:
+	temp_dialog = file_dialog.duplicate()
+	add_child(temp_dialog)
+	temp_dialog.dir_selected.connect(_on_choose_image_dir_selected)
+	temp_dialog.show()
+
+func _on_choose_image_dir_selected(dir):
+	image_directory_picker_button.text = dir #.split('/')[-1]
+	image_directory_picker_button.tooltip_text = dir
+	if _current_dir_in_favorites():
+		var save_data = _get_save_data()
+		save_data.favorites[_current_dir].image_preview_dir = dir
+		_save_data(save_data)
+	_reload_palette()

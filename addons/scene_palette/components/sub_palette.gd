@@ -51,13 +51,13 @@ func set_title(title:String):
 func add_item(item:PalettePluginSceneDrop):
 	scene_drop_grid_container.add_child(item)
 
-func instantiate_previews(value:bool):
+func set_display_mode(mode:PalettePluginSceneDrop.display_modes):
 	for node in scene_drop_grid_container.get_children():
 		if node is PalettePluginSceneDrop:
-			node.instantiate_scene_preview = value
+			node.set_display_mode(mode)
 	for node in sub_palette_container.get_children():
 		if node is PalettePluginSubPalette:
-			node.instantiate_previews(value)
+			node.set_display_mode(mode)
 
 # only used by top level palette
 #func clear_items():
