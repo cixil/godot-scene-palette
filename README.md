@@ -14,7 +14,6 @@ as dragging and dropping `tscn` or `scn` files from the file browser, so you can
 advantage of the same keyboard shortcuts, such as holding `ctrl` when dropping
 a file to add it as a child of the currently selected node.
 
-In the settings you can enable "non scene files" to directly drag other files such as `png`, `obj`, etc onto the workspace.
 
 #### Navigating to a new Palette
 Using the file browser on top, navigate to the folder containing scenes for
@@ -22,14 +21,17 @@ your palette. The plugin will create a palette automatically using the scenes
 in this folder. Nested folders will also be shown as expandable "sub-palettes". 
 
 Press the heart button next to the file selector to save this directory to your
-favorites. You can change the colors of your favorite palettes to differentiate
-them and saved palettes will persist when closing and reopening the editor.
+favorites. Once it is in your favorites, any settings you change will persist when closing and reopening the editor.
 
 
-#### More Options
-If you are working on a 2D project, you can instantiate the actual scenes to display in the palette thumbnails to get a crisp image, or you can use the editor's built-in previews (default). These previews come from a snapshot of the scene in the editor window from the last time you saved the scene. If you are using editor previews and no preview shows up, open the scene with the the button on the top right of the thumbnail, center the image and save it again. You may need to re-open the folder in the plugin, but this should update the thumbnails.
-
-![gif of basic usage](/gifs/and-more-opt.gif)
+#### More Options/Settings
+- Change the background color of your favorite palettes to quickly differentiate them.
+- You can use different display modes to generate thumbnails:
+  - use the editor's built-in previews. If you are using editor previews and no preview shows up, open the scene, center the image and save it again. You may need to re-open the folder in the plugin, but this should update the thumbnail.
+  - use png files with the same name as the scene file (can be in a separate folder)
+  - for pixel art or small 2D assets, instantiate the actual scenes within the thumbnails.
+- Flatten subdirectories so it shows as a single palette
+- Enable "non scene files" to directly drag other files such as `png`, `obj`, etc onto the workspace.
 
 
 ## Installation
