@@ -35,7 +35,7 @@ favorites. Once it is in your favorites, any settings you change will persist wh
 
 
 ## Installation
-1. Download [Scene Palette from AssetLib in the Godot editor](https://godotengine.org/asset-library/asset/3074) or simply copy the contents of the `addons` folder of this repository into the `addons` folder in your project.
+1. Download [Scene Palette from Asset Store in the Godot editor](https://store.godotengine.org/asset/cecilia/scene-palette/) (or the older [Assetlib](https://godotengine.org/asset-library/asset/3074)) or simply copy the contents of the `addons` folder of this repository into the `addons` folder in your project.
 2. Enable the plugin in your project settings.
 #### Upgrading
 1. Disable the plugin in your project settings
